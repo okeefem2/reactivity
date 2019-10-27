@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Res, HttpStatus, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, BadRequestException } from '@nestjs/common';
 import { Todo } from '@reactivity/common';
 
 @Controller('todos')

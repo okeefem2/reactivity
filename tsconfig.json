@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@reactivity/common": ["libs/common/src/index.ts"]
+      "@reactivity/common": ["libs/common/src/index.ts"],
+      "@reactivity/components": ["libs/components/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

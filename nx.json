@@ -19,6 +19,15 @@
     },
     "common": {
       "tags": []
+    },
+    "reactivity-web-client": {
+      "tags": []
+    },
+    "reactivity-web-client-e2e": {
+      "tags": []
+    },
+    "components": {
+      "tags": []
     }
   }
 }

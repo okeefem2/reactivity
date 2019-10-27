@@ -5,9 +5,11 @@
     "types": []
   },
   "exclude": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
   ],
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "**/*.tsx"
   ]
 }
