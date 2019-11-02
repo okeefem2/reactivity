@@ -1,0 +1,9 @@
+.activity-dashboard {
+  display: grid;
+  grid-template-rows: min-content;
+  grid-template-columns: 10% 40%;
+
+  &__list {
+    grid-column: 2/2;
+  }
+}

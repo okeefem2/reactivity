@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Header } from 'semantic-ui-react'
 
 import './app.scss';
 
-import { Route, Link } from 'react-router-dom';
-import { ExampleClassComponent } from '@reactivity/components';
+import { NavBarComponent } from '@reactivity/components';
+import { ActivityComponent } from '@reactivity/activity';
 
 export const App: React.FC = () => {
   /*
@@ -13,17 +13,22 @@ export const App: React.FC = () => {
    * Note: The corresponding styles are in the ./${fileName}.${style} file.
    */
   return (
-    <div className="app">
-      <Header as='h2' icon='users' content='Reactivities' />
-      <main>
-        <h2>Values</h2>
-        <ExampleClassComponent />
+    <Fragment>
+      <NavBarComponent />
+      <main className="app">
+        <ActivityComponent />
       </main>
+    </Fragment>
+  );
+};
 
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
+export default App;
+
+
+{/* START: routes */ }
+{/* These routes and navigation have been generated for you */ }
+{/* Feel free to move and update them to fit your needs */ }
+{/* <br />
       <hr />
       <br />
       <div role="navigation">
@@ -53,11 +58,6 @@ export const App: React.FC = () => {
           <div>
             <Link to="/">Click here to go back to root page.</Link>
           </div>
-        )}
-      />
-      {/* END: routes */}
-    </div>
-  );
-};
-
-export default App;
+        )} */}
+// />
+{/* END: routes */ }

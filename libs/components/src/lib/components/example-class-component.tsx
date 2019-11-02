@@ -3,8 +3,11 @@ import axios, { AxiosResponse } from 'axios';
 import { Value } from '@reactivity/common';
 import { List } from 'semantic-ui-react'
 
-export class ExampleClassComponent extends Component {
-  state = {
+interface ExampleState {
+  values: Value[];
+}
+export class ExampleClassComponent extends Component<{}, ExampleState> {
+  readonly state: ExampleState = {
     values: [],
   };
 
@@ -13,13 +16,13 @@ export class ExampleClassComponent extends Component {
   // But for the example I will use this
   componentDidMount() {
     // .net
-    axios.get('/dotnet/values').then((response: AxiosResponse<Value[]>) => {
+    axios.get<Value[]>('/dotnet/values').then((response: AxiosResponse<Value[]>) => {
       this.setState({
         values: [...this.state.values, ...response.data]
       });
     });
     // nestjs
-    axios.get('/api/values').then((response: AxiosResponse<Value[]>) => {
+    axios.get<Value[]>('/api/values').then((response: AxiosResponse<Value[]>) => {
       this.setState({
         values: [...this.state.values, ...response.data]
       });

@@ -28,6 +28,9 @@
     },
     "components": {
       "tags": []
+    },
+    "activity": {
+      "tags": []
     }
   }
 }
