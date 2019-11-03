@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { Header } from 'semantic-ui-react'
+import React, { Fragment, useState } from 'react';
 
 import './app.scss';
 
@@ -7,16 +6,15 @@ import { NavBarComponent } from '@reactivity/components';
 import { ActivityComponent } from '@reactivity/activity';
 
 export const App: React.FC = () => {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./${fileName}.${style} file.
-   */
+  const [createActivity, setCreateActivity] = useState<boolean>(false);
+
   return (
     <Fragment>
-      <NavBarComponent />
+      <NavBarComponent setCreateActivity={setCreateActivity} />
       <main className="app">
-        <ActivityComponent />
+        <ActivityComponent
+          createActvity={createActivity}
+          setCreateActivity={setCreateActivity} />
       </main>
     </Fragment>
   );
