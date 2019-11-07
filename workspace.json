@@ -15,13 +15,8 @@
             "main": "apps/todos/src/main.tsx",
             "polyfills": "apps/todos/src/polyfills.ts",
             "tsConfig": "apps/todos/tsconfig.app.json",
-            "assets": [
-              "apps/todos/src/favicon.ico",
-              "apps/todos/src/assets"
-            ],
-            "styles": [
-              "apps/todos/src/styles.scss"
-            ],
+            "assets": ["apps/todos/src/favicon.ico", "apps/todos/src/assets"],
+            "styles": ["apps/todos/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/babel"
           },
@@ -71,10 +66,7 @@
               "apps/todos/tsconfig.app.json",
               "apps/todos/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/todos/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/todos/**"]
           }
         },
         "test": {
@@ -109,74 +101,8 @@
           "options": {
             "linter": "eslint",
             "config": "apps/todos-e2e/.eslintrc",
-            "tsConfig": [
-              "apps/todos-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/todos-e2e/**"
-            ]
-          }
-        }
-      }
-    },
-    "api": {
-      "root": "apps/api",
-      "sourceRoot": "apps/api/src",
-      "projectType": "application",
-      "prefix": "api",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "api:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "config": "apps/api/.eslintrc",
-            "tsConfig": [
-              "apps/api/tsconfig.app.json",
-              "apps/api/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/api/jest.config.js",
-            "tsConfig": "apps/api/tsconfig.spec.json"
+            "tsConfig": ["apps/todos-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/todos-e2e/**"]
           }
         }
       }
@@ -196,10 +122,7 @@
               "libs/common/tsconfig.lib.json",
               "libs/common/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/common/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/common/**"]
           }
         },
         "test": {
@@ -229,9 +152,7 @@
               "apps/reactivity-web-client/src/favicon.ico",
               "apps/reactivity-web-client/src/assets"
             ],
-            "styles": [
-              "apps/reactivity-web-client/src/styles.scss"
-            ],
+            "styles": ["apps/reactivity-web-client/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/babel"
           },
@@ -281,10 +202,7 @@
               "apps/reactivity-web-client/tsconfig.app.json",
               "apps/reactivity-web-client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/reactivity-web-client/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/reactivity-web-client/**"]
           }
         },
         "test": {
@@ -319,9 +237,7 @@
           "options": {
             "linter": "eslint",
             "config": "apps/reactivity-web-client-e2e/.eslintrc",
-            "tsConfig": [
-              "apps/reactivity-web-client-e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["apps/reactivity-web-client-e2e/tsconfig.e2e.json"],
             "exclude": [
               "**/node_modules/**",
               "!apps/reactivity-web-client-e2e/**"
@@ -345,10 +261,7 @@
               "libs/components/tsconfig.lib.json",
               "libs/components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/components/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/components/**"]
           }
         },
         "test": {
@@ -375,10 +288,7 @@
               "libs/activity/tsconfig.lib.json",
               "libs/activity/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/activity/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/activity/**"]
           }
         },
         "test": {
@@ -386,6 +296,33 @@
           "options": {
             "jestConfig": "libs/activity/jest.config.js",
             "tsConfig": "libs/activity/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "libs/api",
+      "sourceRoot": "libs/api/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/api/.eslintrc",
+            "tsConfig": [
+              "libs/api/tsconfig.lib.json",
+              "libs/api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/api/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/api/jest.config.js",
+            "tsConfig": "libs/api/tsconfig.spec.json"
           }
         }
       }

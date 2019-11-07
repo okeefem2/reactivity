@@ -19,7 +19,8 @@
     "paths": {
       "@reactivity/common": ["libs/common/src/index.ts"],
       "@reactivity/components": ["libs/components/src/index.ts"],
-      "@reactivity/activity": ["libs/activity/src/index.ts"]
+      "@reactivity/activity": ["libs/activity/src/index.ts"],
+      "@reactivity/api": ["libs/api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

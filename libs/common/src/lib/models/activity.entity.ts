@@ -11,7 +11,7 @@ export class Activity {
   @Column('text')
   category: string;
   @Column('date')
-  date: Date;
+  date: Date | string;
   @Column('text')
   city: string;
   @Column('text')

@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-$color-primary-light: rgb(32, 167, 172);
-$color-primary: rgb(33, 138, 174);
-$color-primary-dark: rgb(24, 42, 115);
+$color-primary-light: #20a7ac;
+$color-primary: #218aae;
+$color-primary-dark: #182a73;
 $color-background-dark: #333;
+$color-danger: #BA3658;
+$color-danger-dark: #7A2339;
 
 *,
 *::before,
@@ -60,6 +62,13 @@ body {
       background-color: $color-background-dark;
       &:hover {
         background-color: #000;
+      }
+    }
+
+    &__danger {
+      background-color: $color-danger;
+      &:hover {
+        background-color: $color-danger-dark;
       }
     }
   }
