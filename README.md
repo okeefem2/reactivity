@@ -1,7 +1,10 @@
 # Reactivity
 
-Adding a feature library:
+Adding a react feature library:
 `nx generate lib --name=activity --no-interactive --framework=react`
+
+Adding a general purpose ts library
+`nx generate @nrwl/workspace:library activity-store`
 
 TODO would like at the end of the course to combine all the apis with graphql
 

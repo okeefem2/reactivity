@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Put, Delete, Param, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { Activity } from '@reactivity/common';
+import { ActivityEntity } from '@reactivity/entity';
 import { ActivityService } from './activity.service';
 
 @Controller('activity')
@@ -9,12 +9,12 @@ export class ActivityController {
   // TODO figure out how to use observables here...
 
   @Get()
-  activities(): Promise<Activity[]> {
+  activities(): Promise<ActivityEntity[]> {
     return this.activityService.findAll();
   }
 
   @Get(':id')
-  async aactivity(@Param('id') id: string): Promise<Activity> {
+  async aactivity(@Param('id') id: string): Promise<ActivityEntity> {
     try {
       const activity = await this.activityService.findById(id);
       return activity;
@@ -24,7 +24,7 @@ export class ActivityController {
   }
 
   @Post()
-  async createActivity(@Body() activity: Activity): Promise<Activity> {
+  async createActivity(@Body() activity: ActivityEntity): Promise<ActivityEntity> {
     // TODO validation
     try {
       const result = await this.activityService.insert(activity);
@@ -35,7 +35,7 @@ export class ActivityController {
   }
 
   @Put(':id')
-  async updateActivity(@Param('id') id: string, @Body() activity: Activity): Promise<Activity> {
+  async updateActivity(@Param('id') id: string, @Body() activity: ActivityEntity): Promise<ActivityEntity> {
     // TODO validation
     try {
       await this.activityService.update(id, activity);

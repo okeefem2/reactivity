@@ -31,6 +31,15 @@
     },
     "api": {
       "tags": []
+    },
+    "activity-store": {
+      "tags": []
+    },
+    "activity-data-client": {
+      "tags": []
+    },
+    "entity": {
+      "tags": []
     }
   }
 }

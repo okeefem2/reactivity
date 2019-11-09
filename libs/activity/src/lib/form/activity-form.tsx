@@ -1,27 +1,21 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useContext } from 'react';
 
 import './activity-form.scss';
 import { Segment, Form, Loader } from 'semantic-ui-react';
 import { Activity } from '@reactivity/common';
 import { v4 as uuid } from 'uuid';
+import { activityContext } from '@reactivity/activity-store';
 
 type ActivityFormData = Activity | Partial<Activity>;
 export interface ActivityFormProps {
   activity: ActivityFormData;
-  setEditActivity: (edit: boolean) => void;
-  createActivity: (activity: Activity) => void;
-  updateActivity: (activity: Activity) => void;
-  submitting: boolean;
 }
 
 export const ActivityForm: React.FC<ActivityFormProps> =
   ({
     activity: initialFormState,
-    setEditActivity,
-    createActivity,
-    updateActivity,
-    submitting,
   }) => {
+    const activityStore = useContext(activityContext);
 
     const initializeForm = (): ActivityFormData => {
       if (!initialFormState) {
@@ -46,10 +40,10 @@ export const ActivityForm: React.FC<ActivityFormProps> =
       }
 
       if (activity.id) {
-        updateActivity({ ...activity as Activity });
+        activityStore.updateActivity({ ...activity as Activity });
       } else {
         activity
-        createActivity({ ...activity as Activity, id: uuid() });
+        activityStore.saveNewActivity({ ...activity as Activity, id: uuid() });
       }
     }
 
@@ -91,13 +85,13 @@ export const ActivityForm: React.FC<ActivityFormProps> =
           <div className="activity-form__btn-group">
             <button
               className="btn btn--pill btn--pill__grey mr10"
-              onClick={() => setEditActivity(false)}>
+              onClick={() => activityStore.cancelEdit()}>
               Cancel
           </button>
             <button
               className="btn btn--pill btn--pill__primary"
             >
-              Submit <Loader active={submitting} />
+              Submit
             </button>
           </div>
 

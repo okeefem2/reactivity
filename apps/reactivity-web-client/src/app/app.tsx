@@ -1,28 +1,28 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
+import { observer } from 'mobx-react';
 
 import './app.scss';
-
 import { NavBarComponent } from '@reactivity/components';
 import { ActivityComponent } from '@reactivity/activity';
+import { activityContext } from '@reactivity/activity-store';
 
-export const App: React.FC = () => {
-  const [createActivity, setCreateActivity] = useState<boolean>(false);
+const App: React.FC = () => {
+
+  const activityStore = useContext(activityContext);
+
+  console.log(activityStore.activities);
 
   return (
     <Fragment>
-      <NavBarComponent setCreateActivity={setCreateActivity} />
+      <NavBarComponent />
       <main className="app">
-        <ActivityComponent
-          createActvity={createActivity}
-          setCreateActivity={setCreateActivity} />
+        <ActivityComponent />
       </main>
     </Fragment>
   );
 };
 
-export default App;
-
-
+export default observer(App);
 {/* START: routes */ }
 {/* These routes and navigation have been generated for you */ }
 {/* Feel free to move and update them to fit your needs */ }

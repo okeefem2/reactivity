@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './activity-detail.scss';
-import { Card, Image, Icon, ButtonGroup, Button } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 import { Activity } from '@reactivity/common';
+import { activityContext } from '@reactivity/activity-store';
 
 export interface ActivityDetailProps {
   activity: Activity
-  setEditActivity: (edit: boolean) => void;
 }
 
 export const ActivityDetail =
-  ({ activity, setEditActivity }: ActivityDetailProps) => {
+  ({ activity }: ActivityDetailProps) => {
+    const activityStore = useContext(activityContext);
     return activity ? (
       <Card fluid>
         <Image src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />
@@ -29,12 +30,12 @@ export const ActivityDetail =
           <div className="btn--group">
             <button
               className="btn btn--outline btn--outline__primary"
-              onClick={() => setEditActivity(true)}>
+              onClick={() => activityStore.editActivity(activity.id)}>
               Edit
           </button>
             <button
               className="btn btn--outline btn--outline__grey"
-              onClick={() => setEditActivity(false)}>
+              onClick={() => activityStore.cancelEdit()}>
               Cancel
           </button>
           </div>

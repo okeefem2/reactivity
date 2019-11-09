@@ -1,25 +1,21 @@
-import React, { SyntheticEvent } from 'react'
+import React, { SyntheticEvent, useContext } from 'react'
 import { ItemGroup, Item, Segment, Label, Loader } from 'semantic-ui-react';
 import { Activity } from '@reactivity/common';
 
 import './activity-list.scss';
+import { activityContext } from '@reactivity/activity-store';
 
 interface ActivityListProps {
   activities: Activity[];
-  selectActivityById: (id: string) => void;
-  deleteActivity: (id: string, event: SyntheticEvent<HTMLButtonElement>) => void;
-  submitting: boolean;
-  loadingTarget: string;
 }
 
 export const ActivityListComponent: React.FC<ActivityListProps> =
   ({
     activities,
-    selectActivityById,
-    deleteActivity,
-    submitting,
-    loadingTarget,
   }) => {
+
+    const activityStore = useContext(activityContext);
+
     return (
       <Segment>
         <ItemGroup divided>
@@ -39,14 +35,14 @@ export const ActivityListComponent: React.FC<ActivityListProps> =
                   <div className="activity-list__item-extra">
                     <Label basic content={activity.category} />
                     <div>
-                      <button onClick={() => selectActivityById(activity.id)}
+                      <button onClick={() => activityStore.selectActivityById(activity.id)}
                         className="btn btn--pill btn--pill__primary ml10">
                         View
                       </button>
-                      <button onClick={(e) => deleteActivity(activity.id, e)}
+                      <button onClick={() => activityStore.deleteActivity(activity.id)}
                         name={activity.id}
                         className="btn btn--pill btn--pill__danger ml10">
-                        Delete <Loader active={submitting && activity.id === loadingTarget} />
+                        Delete
                       </button>
                     </div>
                   </div>

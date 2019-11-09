@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ActivityController } from './activity.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Activity } from '@reactivity/common';
 import { ActivityService } from './activity.service';
+import { ActivityEntity } from '@reactivity/entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Activity])
+    TypeOrmModule.forFeature([ActivityEntity])
   ],
   controllers: [ActivityController],
   providers: [ActivityService],

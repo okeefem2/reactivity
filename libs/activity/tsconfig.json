@@ -7,5 +7,5 @@
     "allowSyntheticDefaultImports": true,
     "types": ["node", "jest"]
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", "../../apps/reactivity-web-client/src/app/activity-store.ts"]
 }

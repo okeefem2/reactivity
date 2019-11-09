@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Menu, Container, Button } from 'semantic-ui-react';
+import { activityContext } from '@reactivity/activity-store';
 
-interface NavBarProps {
-  setCreateActivity: (create: boolean) => void;
-}
 export const NavBarComponent =
-  ({ setCreateActivity }) => {
+  () => {
+    const activityStore = useContext(activityContext);
+
     return (
       <Menu fixed='top' inverted>
         <Container>
@@ -18,7 +18,7 @@ export const NavBarComponent =
           />
           <Menu.Item
             name='Create Activity'>
-            <Button positive content='Create Activity' onClick={() => setCreateActivity(true)} />
+            <Button positive content='Create Activity' onClick={() => activityStore.createActivity()} />
           </Menu.Item>
         </Container>
 

@@ -1,3 +1,3 @@
 export * from './todo';
 export * from './value';
-export * from './activity.entity';
+export * from './activity';

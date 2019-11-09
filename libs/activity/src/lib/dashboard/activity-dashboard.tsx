@@ -1,60 +1,34 @@
-import React, { SyntheticEvent } from 'react'
-import { Activity } from '@reactivity/common';
+import React, { useContext } from 'react'
 import { ActivityListComponent } from '../list/activity-list';
 
 import './activity-dashboard.scss';
-import ActivityDetail from '../detail/activity-detail';
-import ActivityForm from '../form/activity-form';
+import { observer } from 'mobx-react';
+import { activityContext } from '@reactivity/activity-store';
+import { ActivityDetail } from '../detail/activity-detail';
+import { ActivityForm } from '../form/activity-form';
+// interface ActivityDashboardProps {
+//   activities: Activity[];
+// }
+export const ActivityDashboardComponent: React.FC =
+  observer(() => {
 
-interface ActivityDashboardProps {
-  activities: Activity[];
-  selectedActivity: Activity;
-  selectActivityById: (id: string) => void;
-  editActivity: boolean,
-  setEditActivity: (edit: boolean) => void;
-  createActivity: (activity: Activity) => void;
-  updateActivity: (activity: Activity) => void;
-  deleteActivity: (id: string, event: SyntheticEvent<HTMLButtonElement>) => void;
-  submitting: boolean;
-  loadingTarget: string;
-}
+    const activityStore = useContext(activityContext);
 
-export const ActivityDashboardComponent: React.FC<ActivityDashboardProps> =
-  ({
-    activities,
-    selectActivityById,
-    selectedActivity,
-    editActivity,
-    setEditActivity,
-    createActivity,
-    updateActivity,
-    deleteActivity,
-    submitting,
-  }) => {
     return (
       <div className="activity-dashboard">
         <div className="activity-dashboard__list">
-          <ActivityListComponent
-            activities={activities}
-            selectActivityById={selectActivityById}
-            deleteActivity={deleteActivity}
-            submitting={submitting}
-          />
+          <ActivityListComponent activities={activityStore.activities} />
         </div>
         <div className="activity-dashboard__detail">
-          <ActivityDetail activity={selectedActivity} setEditActivity={setEditActivity} />
+          <ActivityDetail activity={activityStore.selectedActivity} />
           {
-            editActivity &&
+            activityStore.editing &&
             <ActivityForm
-              key={(selectedActivity && selectedActivity.id) || 0}
-              activity={selectedActivity}
-              setEditActivity={setEditActivity}
-              createActivity={createActivity}
-              updateActivity={updateActivity}
-              submitting={submitting}
+              key={(activityStore.selectedActivity && activityStore.selectedActivity.id) || 0}
+              activity={activityStore.selectedActivity}
             />
           }
         </div>
       </div>
     );
-  }
+  });
