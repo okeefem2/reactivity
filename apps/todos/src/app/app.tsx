@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import './app.scss';
-
-import { Route, Link } from 'react-router-dom';
-
 import { Todo } from '@reactivity/common';
 
 export const App = () => {

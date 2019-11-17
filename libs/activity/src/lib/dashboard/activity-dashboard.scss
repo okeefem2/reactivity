@@ -1,14 +1,14 @@
-.activity-dashboard {
-  display: grid;
-  grid-template-rows: min-content;
-  grid-template-columns: 10% 40% 5% 30%;
-  gap: 1rem;
+// .activity-dashboard {
+//   display: grid;
+//   grid-template-rows: min-content;
+//   grid-template-columns: 10% 40% 5% 30%;
+//   gap: 1rem;
 
-  &__list {
-    grid-column: 2/2;
-  }
+//   &__list {
+//     grid-column: 2/2;
+//   }
 
-  &__detail {
-    grid-column: 4/5;
-  }
-}
+//   &__detail {
+//     grid-column: 4/5;
+//   }
+// }

@@ -4,7 +4,7 @@ export class Activity {
   title: string;
   description: string;
   category: string;
-  date: Date | string;
+  date: Date;
   city: string;
   venue: string;
 }

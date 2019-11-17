@@ -1,8 +1,8 @@
 import { get, post, put, del } from '@reactivity/common';
 import { Activity } from '@reactivity/common';
 
-// const apiBase = '/api/activity';
-const apiBase = '/dotnet/activity';
+const apiBase = '/api/activity';
+// const apiBase = '/dotnet/activity';
 // can also be /dotnet/activity to use the dotnet backend
 // TODO i'd like to have both and do loading balancing or something...
 

@@ -4,11 +4,7 @@ import { ActivityListComponent } from '../list/activity-list';
 import './activity-dashboard.scss';
 import { observer } from 'mobx-react';
 import { activityContext } from '@reactivity/activity-store';
-import { ActivityDetail } from '../detail/activity-detail';
-import { ActivityForm } from '../form/activity-form';
-// interface ActivityDashboardProps {
-//   activities: Activity[];
-// }
+
 export const ActivityDashboardComponent: React.FC =
   observer(() => {
 
@@ -16,11 +12,12 @@ export const ActivityDashboardComponent: React.FC =
 
     return (
       <div className="activity-dashboard">
+
         <div className="activity-dashboard__list">
-          <ActivityListComponent activities={activityStore.activities} />
+          <ActivityListComponent activityGroups={activityStore.activitiesByDate} />
         </div>
-        <div className="activity-dashboard__detail">
-          <ActivityDetail activity={activityStore.selectedActivity} />
+        {/* <div className="activity-dashboard__detail">
+          <ActivityDetail />
           {
             activityStore.editing &&
             <ActivityForm
@@ -28,7 +25,7 @@ export const ActivityDashboardComponent: React.FC =
               activity={activityStore.selectedActivity}
             />
           }
-        </div>
+        </div> */}
       </div>
     );
   });

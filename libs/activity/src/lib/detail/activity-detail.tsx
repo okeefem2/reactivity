@@ -1,51 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import './activity-detail.scss';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Image, Grid } from 'semantic-ui-react';
 import { Activity } from '@reactivity/common';
 import { activityContext } from '@reactivity/activity-store';
+import { observer } from 'mobx-react-lite';
+import { RouteComponentProps } from 'react-router';
+import { ActivityDetailHeader } from '../detail-header/activity-detail-header';
+import { ActivityDetailInfo } from '../detail-info/activity-detail-info';
+import { ActivityDetailChat } from '../detail-chat/activity-detail-chat';
+import { ActivityDetailSidebar } from '../detail-sidebar/activity-detail-sidebar';
 
 export interface ActivityDetailProps {
   activity: Activity
 }
 
-export const ActivityDetail =
-  ({ activity }: ActivityDetailProps) => {
+interface ActivityDetailParams {
+  id: string;
+}
+
+export const ActivityDetail: React.FC<RouteComponentProps<ActivityDetailParams>> =
+  observer(({ match, history }) => {
     const activityStore = useContext(activityContext);
+
+    useEffect(() => {
+      activityStore.loadActivity(match.params.id);
+    }, []);
+
+    const activity = activityStore.activity;
+
     return activity ? (
-      <Card fluid>
-        <Image src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>{activity.title}</Card.Header>
-          <Card.Meta>
-            <span className='date'>{activity.date}</span>
-          </Card.Meta>
-          <Card.Description>
-            <div>{activity.description}</div>
-            <div>{activity.city}</div>
-            <div>{activity.venue}</div>
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <div className="btn--group">
-            <button
-              className="btn btn--outline btn--outline__primary"
-              onClick={() => activityStore.editActivity(activity.id)}>
-              Edit
-          </button>
-            <button
-              className="btn btn--outline btn--outline__grey"
-              onClick={() => activityStore.cancelEdit()}>
-              Cancel
-          </button>
-          </div>
-        </Card.Content>
-      </Card>
+      <Grid>
+        <Grid.Column width={10}>
+          <ActivityDetailHeader activity={activity}></ActivityDetailHeader>
+          <ActivityDetailInfo activity={activity}></ActivityDetailInfo>
+          <ActivityDetailChat activity={activity}></ActivityDetailChat>
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <ActivityDetailSidebar activity={activity}></ActivityDetailSidebar>
+        </Grid.Column>
+      </Grid>
     ) : (
         <h2>
           Select an Activity to View
       </h2>
       );
-  };
-
-export default ActivityDetail;
+  });
