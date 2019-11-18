@@ -1,13 +1,12 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TodosController } from './todos/todos.controller';
-import { ValuesController } from './values/values.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ActivityModule } from './activity/activity.module';
 import { config } from '../config/typeorm.config';
+import { LoggingMiddleware } from './middleware/logging-middleware';
 
 @Module({
   imports: [
@@ -16,7 +15,14 @@ import { config } from '../config/typeorm.config';
       ...config
     })
   ],
-  controllers: [AppController, TodosController, ValuesController],
+  controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: import("@nestjs/common").MiddlewareConsumer) {
+    // https://docs.nestjs.com/middleware
+    consumer
+      .apply(LoggingMiddleware)
+      .forRoutes('*');
+  }
+}

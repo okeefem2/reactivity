@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Delete, Param, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param } from '@nestjs/common';
 import { ActivityEntity } from '@reactivity/entity';
 import { ActivityService } from './activity.service';
 
@@ -15,43 +15,25 @@ export class ActivityController {
 
   @Get(':id')
   async aactivity(@Param('id') id: string): Promise<ActivityEntity> {
-    try {
-      const activity = await this.activityService.findById(id);
-      return activity;
-    } catch (e) {
-      throw new NotFoundException(`Unable to find entity ${id}`);
-    }
+    return await this.activityService.findById(id);
   }
 
   @Post()
   async createActivity(@Body() activity: ActivityEntity): Promise<ActivityEntity> {
-    // TODO validation
-    try {
-      const result = await this.activityService.insert(activity);
-      return { id: result.identifiers, ...activity };
-    } catch (e) {
-      throw new InternalServerErrorException(`Unable to create new activity`);
-    }
+    const result = await this.activityService.insert(activity);
+    return { id: result.identifiers, ...activity };
   }
 
   @Put(':id')
-  async updateActivity(@Param('id') id: string, @Body() activity: ActivityEntity): Promise<ActivityEntity> {
-    // TODO validation
-    try {
-      await this.activityService.update(id, activity);
-      return this.activityService.findById(id);
-    } catch (e) {
-      throw new InternalServerErrorException(`Unable to update activity ${id}`);
-    }
+  async updateActivity(@Param('id') id: string, @Body() activity: Partial<ActivityEntity>): Promise<ActivityEntity> {
+    throw 42;
+    await this.activityService.update(id, activity);
+    return this.activityService.findById(id);
   }
 
   @Delete(':id')
   async deleteActivity(@Param('id') id: string): Promise<void> {
-    try {
-      await this.activityService.delete(id);
-      return;
-    } catch (e) {
-      throw new InternalServerErrorException(`Unable to delete activity ${id}`);
-    }
+    await this.activityService.delete(id);
+    return;
   }
 }

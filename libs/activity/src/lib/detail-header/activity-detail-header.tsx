@@ -24,10 +24,12 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
     color: 'white'
   };
 
-  return (
+  const activityCategoryImage = activity && activity.category ? `categoryImages/${activity.category.toLowerCase()}.jpg` : 'placeholder.png'
+
+  return activity && (
     <Segment.Group>
       <Segment basic attached='top' style={{ padding: '0' }}>
-        <Image src={`/assets/categoryImages/${activity.category.toLowerCase()}.jpg`} fluid style={activityImageStyle} />
+        <Image src={`/assets/${activityCategoryImage}`} fluid style={activityImageStyle} />
         <Segment basic style={activityImageTextStyle}>
           <Item.Group>
             <Item>

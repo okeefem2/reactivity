@@ -1,30 +1,37 @@
 import React, { Fragment, useContext } from 'react';
-import { Route, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
 import './app.scss';
-import { NavBarComponent } from '@reactivity/components';
+import { NavBarComponent, NotFound } from '@reactivity/components';
 import { ActivityComponent, ActivityForm, ActivityDetail } from '@reactivity/activity';
 import { Home } from '@reactivity/home';
 import { observer } from 'mobx-react-lite';
-import { activityContext } from '@reactivity/activity-store';
+import { loadingContext } from '@reactivity/loading-store';
 import { LoadingComponent } from '@reactivity/components';
+import { ToastContainer, toast } from 'react-toastify';
 
 const App: React.FC<RouteComponentProps> = observer(({ location }) => {
   // TODO use a loading store
-  const activityStore = useContext(activityContext);
+  const loadingStore = useContext(loadingContext);
 
   return (
     <Fragment>
+      <ToastContainer position={toast.POSITION.TOP_RIGHT} />
+      {
+        loadingStore.loading &&
+        <LoadingComponent inverted={false} content={loadingStore.loadingMessage} />
+      }
       <main>
         <Route exact path="/" component={Home} />
         <Route path={'/(.+)'} render={() => (
           <div className="app">
             <NavBarComponent />
-            {
-              activityStore.loading && <LoadingComponent inverted={false} content={activityStore.loadingMessage} />
-            }
-            <Route path="/activities" component={ActivityComponent} />
-            <Route path="/activity/:id" component={ActivityDetail} />
-            <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
+
+            <Switch>
+              <Route path="/activities" component={ActivityComponent} />
+              <Route path="/activity/:id" component={ActivityDetail} />
+              <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
+              <Route component={NotFound} />
+            </Switch>
           </div>
         )} />
       </main>

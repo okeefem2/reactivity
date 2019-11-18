@@ -25,7 +25,8 @@
         "libs/activity-data-client/src/index.ts"
       ],
       "@reactivity/entity": ["libs/entity/src/index.ts"],
-      "@reactivity/home": ["libs/home/src/index.ts"]
+      "@reactivity/home": ["libs/home/src/index.ts"],
+      "@reactivity/loading-store": ["libs/loading-store/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

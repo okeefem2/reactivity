@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions, DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { ActivityEntity } from '@reactivity/entity';
+
+const ACTIVITY_NOT_FOUND_ERROR = { errors: { activity: 'Not Found' } };
 @Injectable()
 export class ActivityService {
 
@@ -18,24 +20,45 @@ export class ActivityService {
     return this.activityRepository.find(options);
   }
 
-  findById(id?: string): Promise<ActivityEntity> {
-    return this.activityRepository.findOne(id);
+  async findById(id?: string): Promise<ActivityEntity> {
+    const activity = await this.activityRepository.findOne(id);
+
+    if (!activity) {
+      // For some reason my message is not being used...
+      throw new HttpException(ACTIVITY_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
+    }
+
+    return activity;
   }
 
-  find(criteria: Partial<ActivityEntity>): Promise<ActivityEntity[]> {
-    return this.activityRepository.find(criteria);
+  async find(criteria: Partial<ActivityEntity>): Promise<ActivityEntity[]> {
+    const activity = await this.activityRepository.find(criteria);
+    if (!activity) {
+      // For some reason my message is not being used...
+      throw new HttpException(ACTIVITY_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
+    }
+    return activity;
   }
 
-  delete(criteria: string | string[] | Partial<ActivityEntity>): Promise<DeleteResult> {
-    return this.activityRepository.delete(criteria);
+  async delete(criteria: string | string[] | Partial<ActivityEntity>): Promise<DeleteResult> {
+    const deleteResult = await this.activityRepository.delete(criteria);
+
+    if (deleteResult.affected === 0) {
+      throw new HttpException(ACTIVITY_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
+    }
+    return deleteResult;
   }
 
   insert(activity: ActivityEntity): Promise<InsertResult> {
     return this.activityRepository.insert(activity);
   }
 
-  update(id: string, activity: Partial<ActivityEntity>): Promise<UpdateResult> {
-    return this.activityRepository.update(id, activity);
+  async update(id: string, activity: Partial<ActivityEntity>): Promise<UpdateResult> {
+    const updateResult = await this.activityRepository.update(id, activity);
+    if (updateResult.affected === 0) {
+      throw new HttpException(ACTIVITY_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
+    }
+    return updateResult;
   }
 
   /**

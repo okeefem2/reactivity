@@ -1,15 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { BrowserRouter } from 'react-router-dom';
-import { ScrollToTop } from '@reactivity/components';
+import { Router } from 'react-router-dom';
 import App from './app/App';
+import { routerHistory } from '@reactivity/common';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={routerHistory}>
     {/* <ScrollToTop> */}
     <App />
     {/* </ScrollToTop> */}
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
+
+// ReactDOM.render(
+//   <BrowserRouter>
+//     {/* <ScrollToTop> */}
+//     <App />
+//     {/* </ScrollToTop> */}
+//   </BrowserRouter>,
+//   document.getElementById('root')
+// );

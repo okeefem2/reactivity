@@ -1,7 +1,8 @@
 import { observable, action, computed, configure, runInAction } from 'mobx';
-import { createContext } from 'react';
-import { Activity } from '@reactivity/common';
+import { createContext, useContext } from 'react';
+import { Activity, routerHistory } from '@reactivity/common';
 import { list, deleteById, update, create, getById } from '@reactivity/activity-data-client';
+import { loadingStore } from '@reactivity/loading-store';
 
 export interface ActivityGroups {
   [k: string]: Activity[];
@@ -9,10 +10,9 @@ export interface ActivityGroups {
 // ensures that state can only be modified in an action
 configure({ enforceActions: 'always' });
 class ActivityStore {
+
   @observable activityRegistry = new Map();
   @observable activity: Activity;
-  @observable loading = false;
-  @observable loadingMessage: string;
 
   @computed get activitiesByDate(): Map<string, Activity[]> {
     // TODO look into performance difference between this and regular objects...
@@ -30,7 +30,7 @@ class ActivityStore {
   }
 
   @action loadActivities = async () => {
-    this.toggleLoading('Loading Activities');
+    loadingStore.toggleLoading(true, 'Loading Activities');
 
     try {
       const activities = await list();
@@ -43,15 +43,10 @@ class ActivityStore {
         });
       });
     } catch (e) {
-      console.error(e);
+      console.log('Error while loading activities', e);
     }
-    this.toggleLoading();
-  }
 
-  @action toggleLoading = (message = 'Loading') => {
-    this.loadingMessage = this.loading ? undefined : message;
-    this.loading = !this.loading;
-    console.log('Loading!', this.loading);
+    loadingStore.toggleLoading(false);
   }
 
   @action createActivity = () => {
@@ -73,16 +68,16 @@ class ActivityStore {
 
   @action loadActivityById = async (id: string) => {
     console.log('Loading activity');
-    this.toggleLoading(`Loading Activity ${id}`);
+    loadingStore.toggleLoading(true, `Loading Activity ${id}`);
     try {
       const activity = await getById(id);
       runInAction(() => {
         this.activity = { ...activity };
       });
     } catch (e) {
-      console.error(e);
+      console.log('Error while loading activity', e);
     }
-    this.toggleLoading();
+    loadingStore.toggleLoading(false);
   }
 
   @action clearSelectedAndLoading = () => {
@@ -90,7 +85,7 @@ class ActivityStore {
   }
 
   @action saveNewActivity = async (activity: Activity): Promise<Activity> => {
-    this.toggleLoading(`Creating Activity ${activity.title}`);
+    loadingStore.toggleLoading(true, `Creating Activity ${activity.title}`);
 
     this.clearSelectedAndLoading();
     // this.activities = [...this.activities, activity];
@@ -102,12 +97,12 @@ class ActivityStore {
       console.error(e);
       runInAction('Rollback create activity', () => this.activityRegistry.delete(activity.id));
     }
-    this.toggleLoading();
+    loadingStore.toggleLoading(false);
     return activity;
   }
 
   @action deleteActivity = async (id: string) => {
-    this.toggleLoading(`Deleting Activity`);
+    loadingStore.toggleLoading(true, `Deleting Activity`);
 
     this.clearSelectedAndLoading();
 
@@ -123,11 +118,11 @@ class ActivityStore {
       console.error(e);
       runInAction('Rollback delete activity', () => this.activityRegistry.set(id, activityToDelete));
     }
-    this.toggleLoading();
+    loadingStore.toggleLoading(false);
   }
 
   @action updateActivity = async (activity: Activity): Promise<Activity> => {
-    this.toggleLoading('Updating Activity')
+    loadingStore.toggleLoading(true, 'Updating Activity')
     this.clearSelectedAndLoading();
     // const activities = [...this.activities];
     // const updateIndex = activities.findIndex(a => a.id === activity.id);
@@ -146,7 +141,7 @@ class ActivityStore {
       // this.activities = [...activities];
       runInAction('Rollback update activity', () => this.activityRegistry.set(activity.id, previousActivity));
     }
-    this.toggleLoading();
+    loadingStore.toggleLoading(false);
     return activity;
   }
 }

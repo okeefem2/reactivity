@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import './activity-detail.scss';
-import { Card, Image, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { Activity } from '@reactivity/common';
 import { activityContext } from '@reactivity/activity-store';
 import { observer } from 'mobx-react-lite';
@@ -25,6 +25,9 @@ export const ActivityDetail: React.FC<RouteComponentProps<ActivityDetailParams>>
 
     useEffect(() => {
       activityStore.loadActivity(match.params.id);
+      // .catch(e => {
+      //   history.push('/notfound');
+      // });
     }, []);
 
     const activity = activityStore.activity;
@@ -42,7 +45,7 @@ export const ActivityDetail: React.FC<RouteComponentProps<ActivityDetailParams>>
       </Grid>
     ) : (
         <h2>
-          Select an Activity to View
+          Activity Not Found
       </h2>
       );
   });

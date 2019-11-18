@@ -1,0 +1,10 @@
+{
+  "type": "node",
+  "request": "attach",
+  "protocol": "inspector",
+  "name": "API",
+  "port": 3333,
+  "sourceMaps": true,
+  "trace": true,
+  "cwd": "${workspaceFolder}/api"
+}

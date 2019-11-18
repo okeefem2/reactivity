@@ -43,6 +43,9 @@
     },
     "home": {
       "tags": []
+    },
+    "loading-store": {
+      "tags": []
     }
   }
 }

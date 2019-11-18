@@ -1,19 +1,33 @@
 import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
 
+// https://github.com/typestack/class-validator#validation-decorators
 @Entity({ name: 'activity' })
 export class ActivityEntity {
   @PrimaryGeneratedColumn("uuid")
-  id: string;
+  readonly id: string;
+
+  @IsNotEmpty()
   @Column('text')
-  title: string;
+  readonly title: string;
+
+  @IsNotEmpty()
   @Column('text')
-  description: string;
+  readonly description: string;
+
+  @IsNotEmpty()
   @Column('text')
-  category: string;
+  readonly category: string;
+
+  @IsNotEmpty()
   @Column('date')
-  date: Date | string;
+  readonly date: Date | string;
+
+  @IsNotEmpty()
   @Column('text')
-  city: string;
+  readonly city: string;
+
+  @IsNotEmpty()
   @Column('text')
-  venue: string;
+  readonly venue: string;
 }
