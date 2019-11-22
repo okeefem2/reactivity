@@ -3,6 +3,7 @@ import React from 'react';
 import './activity-detail-info.scss';
 import { Activity } from '@reactivity/common';
 import { Segment, Grid, Icon } from 'semantic-ui-react';
+import { format } from 'date-fns';
 
 /* eslint-disable-next-line */
 export interface ActivityDetailInfoProps {
@@ -29,7 +30,7 @@ export const ActivityDetailInfo = ({ activity }: ActivityDetailInfoProps) => {
           </Grid.Column>
           <Grid.Column width={15}>
             <span>
-              {activity.date}
+              {format(activity.date, 'eeee do MMMM')} at {format(activity.date, 'h:mm a')}
             </span>
           </Grid.Column>
         </Grid>

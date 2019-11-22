@@ -3,7 +3,8 @@ import React from 'react';
 import './activity-detail-header.scss';
 import { Segment, Item, Header, Button, Image } from 'semantic-ui-react';
 import { Activity } from '@reactivity/common';
-
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 /* eslint-disable-next-line */
 export interface ActivityDetailHeaderProps {
   activity: Activity;
@@ -39,7 +40,7 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
                   content={activity.title}
                   style={{ color: 'white' }}
                 />
-                <p>{activity.date}</p>
+                <p>{format(activity.date, 'eeee do MMMM')}</p>
                 <p>
                   {activity.description}
                 </p>
@@ -51,7 +52,7 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
       <Segment clearing attached='bottom'>
         <Button color='teal'>Join Activity</Button>
         <Button>Cancel attendance</Button>
-        <Button color='orange' floated='right'>
+        <Button color='orange' floated='right' as={Link} to={`/edit-activity/${activity.id}`}>
           Manage Event
             </Button>
       </Segment>

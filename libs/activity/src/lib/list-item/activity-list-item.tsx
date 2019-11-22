@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import './activity-list-item.scss';
 import { Activity } from '@reactivity/common';
+import { format } from 'date-fns';
 
 export interface ActivityListItemProps {
   activity: Activity;
@@ -30,9 +31,6 @@ export const ActivityListItem = ({ activity }) => {
                 <div className="activity-list__item-extra">
                   <Label basic content={activity.category} />
                   <div>
-
-
-
                   </div>
                 </div>
               </Item.Extra>
@@ -42,7 +40,7 @@ export const ActivityListItem = ({ activity }) => {
 
       </Segment>
       <Segment>
-        <Icon name='clock' /> {activity.date}
+        <Icon name='clock' /> {format(activity.date, 'h:mm a')}
         <Icon name='marker' /> {activity.venue}, {activity.city}
       </Segment>
       <Segment secondary>

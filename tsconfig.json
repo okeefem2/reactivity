@@ -11,23 +11,48 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@reactivity/common": ["libs/common/src/index.ts"],
-      "@reactivity/components": ["libs/components/src/index.ts"],
-      "@reactivity/activity": ["libs/activity/src/index.ts"],
-      "@reactivity/activity-store": ["libs/activity-store/src/index.ts"],
+      "@reactivity/common": [
+        "libs/common/src/index.ts"
+      ],
+      "@reactivity/components": [
+        "libs/components/src/index.ts"
+      ],
+      "@reactivity/activity": [
+        "libs/activity/src/index.ts"
+      ],
+      "@reactivity/activity-store": [
+        "libs/activity-store/src/index.ts"
+      ],
       "@reactivity/activity-data-client": [
         "libs/activity-data-client/src/index.ts"
       ],
-      "@reactivity/entity": ["libs/entity/src/index.ts"],
-      "@reactivity/home": ["libs/home/src/index.ts"],
-      "@reactivity/loading-store": ["libs/loading-store/src/index.ts"]
+      "@reactivity/entity": [
+        "libs/entity/src/index.ts"
+      ],
+      "@reactivity/home": [
+        "libs/home/src/index.ts"
+      ],
+      "@reactivity/loading-store": [
+        "libs/loading-store/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "include": [
+    "./typings/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

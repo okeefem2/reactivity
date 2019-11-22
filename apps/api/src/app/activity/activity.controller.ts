@@ -26,7 +26,6 @@ export class ActivityController {
 
   @Put(':id')
   async updateActivity(@Param('id') id: string, @Body() activity: Partial<ActivityEntity>): Promise<ActivityEntity> {
-    throw 42;
     await this.activityService.update(id, activity);
     return this.activityService.findById(id);
   }

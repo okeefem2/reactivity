@@ -7,21 +7,25 @@ const apiBase = '/api/activity';
 // TODO i'd like to have both and do loading balancing or something...
 
 export function list(): Promise<Activity[]> {
-  return get<Activity[]>(`${apiBase}`);
+  return get<Activity[]>(`${apiBase}`).then((activities) => activities.map(transform));
 }
 
 export function getById(id: string): Promise<Activity> {
-  return get<Activity>(`${apiBase}/${id}`);
+  return get<Activity>(`${apiBase}/${id}`).then(transform);
 }
 
 export function create(activity: Activity): Promise<Activity> {
-  return post<Activity>(`${apiBase}`, activity);
+  return post<Activity>(`${apiBase}`, activity).then(transform);
 }
 
 export function update(activity: Activity): Promise<Activity> {
-  return put<Activity>(`${apiBase}/${activity.id}`, activity);
+  return put<Activity>(`${apiBase}/${activity.id}`, activity).then(transform);
 }
 
 export function deleteById(id: string): Promise<Activity> {
-  return del<Activity>(`${apiBase}/${id}`);
+  return del<Activity>(`${apiBase}/${id}`).then(transform);
+}
+
+function transform(activity: Activity): Activity {
+  return activity && { ...activity, date: new Date(activity.date) };
 }

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import App from './app/App';
 import { routerHistory } from '@reactivity/common';
+import dateFnsLocalizer from 'react-widgets-date-fns';
+dateFnsLocalizer()
 
 ReactDOM.render(
   <Router history={routerHistory}>

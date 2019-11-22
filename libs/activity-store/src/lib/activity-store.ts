@@ -3,6 +3,8 @@ import { createContext, useContext } from 'react';
 import { Activity, routerHistory } from '@reactivity/common';
 import { list, deleteById, update, create, getById } from '@reactivity/activity-data-client';
 import { loadingStore } from '@reactivity/loading-store';
+import { format } from 'date-fns';
+import { toast } from 'react-toastify';
 
 export interface ActivityGroups {
   [k: string]: Activity[];
@@ -18,11 +20,12 @@ class ActivityStore {
     // TODO look into performance difference between this and regular objects...
     return Array.from(this.activityRegistry.values())
       .reduce((groups: Map<string, Activity[]>, activity) => {
-        const group = groups.get(activity.date);
+        const date = format(activity.date, 'eeee do MMMM');
+        const group = groups.get(date);
         if (group) {
-          groups.set(activity.date, [activity, ...group]);
+          groups.set(date, [activity, ...group]);
         } else {
-          groups.set(activity.date, [activity]);
+          groups.set(date, [activity]);
         }
 
         return groups;
@@ -95,6 +98,7 @@ class ActivityStore {
       activity = await create(activity);
     } catch (e) {
       console.error(e);
+      toast.error('Error creating activity!');
       runInAction('Rollback create activity', () => this.activityRegistry.delete(activity.id));
     }
     loadingStore.toggleLoading(false);
@@ -116,6 +120,7 @@ class ActivityStore {
     } catch (e) {
       // Rollback in case of error
       console.error(e);
+      toast.error('Error deleting activity!');
       runInAction('Rollback delete activity', () => this.activityRegistry.set(id, activityToDelete));
     }
     loadingStore.toggleLoading(false);
@@ -137,6 +142,7 @@ class ActivityStore {
     } catch (e) {
       // Rollback in case of error
       console.error(e);
+      toast.error('Error creating updating activity!');
       // activities.splice(updateIndex, 0, previousActivities[0]);
       // this.activities = [...activities];
       runInAction('Rollback update activity', () => this.activityRegistry.set(activity.id, previousActivity));

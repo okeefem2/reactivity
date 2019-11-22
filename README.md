@@ -27,3 +27,5 @@ nx generate @nrwl/workspace:library api
 set up api debugger using <https://github.com/nrwl/nx/issues/1175>
 
 need to install class-transformer and class-validator for validation
+
+npm install react-final-form final-form
