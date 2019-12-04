@@ -1,5 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import { ActivityEntity } from '@reactivity/entity';
+import { ActivityEntity, UserEntity } from '@reactivity/entity';
 
 // You can load you .env file here synchronously using dotenv package (not installed here),
 // import * as dotenv from 'dotenv';
@@ -21,5 +21,5 @@ export const config: ConnectionOptions = {
   synchronize: true,
   logging: true,
   logger: 'file',
-  entities: [ActivityEntity]
+  entities: [ActivityEntity, UserEntity]
 };

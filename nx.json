@@ -46,6 +46,12 @@
     },
     "loading-store": {
       "tags": []
+    },
+    "axios": {
+      "tags": []
+    },
+    "model": {
+      "tags": []
     }
   }
 }

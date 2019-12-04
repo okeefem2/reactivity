@@ -130,7 +130,6 @@ export const ActivityForm: React.FC<RouteComponentProps<ActivityFormParams>> =
               Submit
             </button>
           </div>
-
         </Form>
       );
     }

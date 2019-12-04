@@ -15,13 +15,8 @@
             "main": "apps/todos/src/main.tsx",
             "polyfills": "apps/todos/src/polyfills.ts",
             "tsConfig": "apps/todos/tsconfig.app.json",
-            "assets": [
-              "apps/todos/src/favicon.ico",
-              "apps/todos/src/assets"
-            ],
-            "styles": [
-              "apps/todos/src/styles.scss"
-            ],
+            "assets": ["apps/todos/src/favicon.ico", "apps/todos/src/assets"],
+            "styles": ["apps/todos/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/babel"
           },
@@ -71,10 +66,7 @@
               "apps/todos/tsconfig.app.json",
               "apps/todos/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/todos/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/todos/**"]
           }
         },
         "test": {
@@ -109,13 +101,8 @@
           "options": {
             "linter": "eslint",
             "config": "apps/todos-e2e/.eslintrc",
-            "tsConfig": [
-              "apps/todos-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/todos-e2e/**"
-            ]
+            "tsConfig": ["apps/todos-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/todos-e2e/**"]
           }
         }
       }
@@ -133,9 +120,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -166,10 +151,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -196,10 +178,7 @@
               "libs/common/tsconfig.lib.json",
               "libs/common/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/common/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/common/**"]
           }
         },
         "test": {
@@ -282,10 +261,7 @@
               "apps/reactivity-web-client/tsconfig.app.json",
               "apps/reactivity-web-client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/reactivity-web-client/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/reactivity-web-client/**"]
           }
         },
         "test": {
@@ -320,9 +296,7 @@
           "options": {
             "linter": "eslint",
             "config": "apps/reactivity-web-client-e2e/.eslintrc",
-            "tsConfig": [
-              "apps/reactivity-web-client-e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["apps/reactivity-web-client-e2e/tsconfig.e2e.json"],
             "exclude": [
               "**/node_modules/**",
               "!apps/reactivity-web-client-e2e/**"
@@ -346,10 +320,7 @@
               "libs/components/tsconfig.lib.json",
               "libs/components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/components/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/components/**"]
           }
         },
         "test": {
@@ -376,10 +347,7 @@
               "libs/activity/tsconfig.lib.json",
               "libs/activity/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/activity/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/activity/**"]
           }
         },
         "test": {
@@ -406,10 +374,7 @@
               "libs/activity-store/tsconfig.lib.json",
               "libs/activity-store/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/activity-store/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/activity-store/**"]
           }
         },
         "test": {
@@ -436,10 +401,7 @@
               "libs/activity-data-client/tsconfig.lib.json",
               "libs/activity-data-client/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/activity-data-client/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/activity-data-client/**"]
           }
         },
         "test": {
@@ -466,10 +428,7 @@
               "libs/entity/tsconfig.lib.json",
               "libs/entity/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/entity/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/entity/**"]
           }
         },
         "test": {
@@ -496,10 +455,7 @@
               "libs/home/tsconfig.lib.json",
               "libs/home/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/home/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/home/**"]
           }
         },
         "test": {
@@ -526,10 +482,7 @@
               "libs/loading-store/tsconfig.lib.json",
               "libs/loading-store/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/loading-store/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/loading-store/**"]
           }
         },
         "test": {
@@ -537,6 +490,33 @@
           "options": {
             "jestConfig": "libs/loading-store/jest.config.js",
             "tsConfig": "libs/loading-store/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "model": {
+      "root": "libs/model",
+      "sourceRoot": "libs/model/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/model/.eslintrc",
+            "tsConfig": [
+              "libs/model/tsconfig.lib.json",
+              "libs/model/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/model/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/model/jest.config.js",
+            "tsConfig": "libs/model/tsconfig.spec.json"
           }
         }
       }

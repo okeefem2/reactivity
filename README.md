@@ -4,7 +4,7 @@ Adding a react feature library:
 `nx generate @nrwl/react:library home`
 
 Adding a general purpose ts library
-`nx generate @nrwl/workspace:library activity-store`
+`nx g @nrwl/workspace:library activity-store`
 TODO would like at the end of the course to combine all the apis with graphql
 
 Adding a new React component
@@ -21,7 +21,7 @@ nx g @nrwl/react:component not-found --directory=not-found --project=components
 to generate a uuid client side
 npm install uuid @types/uuid
 
-to generate a gerneral purpose library
+to generate a general purpose library
 nx generate @nrwl/workspace:library api
 
 set up api debugger using <https://github.com/nrwl/nx/issues/1175>
@@ -29,3 +29,14 @@ set up api debugger using <https://github.com/nrwl/nx/issues/1175>
 need to install class-transformer and class-validator for validation
 
 npm install react-final-form final-form
+
+Nest authentication with passport <https://docs.nestjs.com/techniques/authentication>
+nx g @nestjs/schematics:module auth --source-root apps/api/src --path app
+nx generate @nestjs/schematics:service auth --source-root apps/api/src --path app
+nx g @nestjs/schematics:module users --source-root apps/api/src --path app
+nx generate @nestjs/schematics:service users --source-root apps/api/src --path app
+nx generate @nestjs/schematics:controller auth --source-root apps/api/src --path app
+
+`curl -X POST http://localhost:3333/api/auth/create -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"`
+
+`curl -X POST http://localhost:3333/api/auth/login -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"`
