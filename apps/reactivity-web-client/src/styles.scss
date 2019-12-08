@@ -104,6 +104,7 @@ body {
     }
   }
 
+  // These groups should be their own classes
   &--spaced-group {
     display: flex;
     align-items: center;
@@ -130,5 +131,9 @@ body {
       border-bottom-right-radius: 0px;
 
     }
+  }
+
+  &--full-width {
+    width: 100%;
   }
 }

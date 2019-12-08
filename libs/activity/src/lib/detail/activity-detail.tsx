@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 
 import './activity-detail.scss';
 import { Grid } from 'semantic-ui-react';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 import { activityContext } from '@reactivity/activity-store';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router';

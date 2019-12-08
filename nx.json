@@ -52,6 +52,18 @@
     },
     "model": {
       "tags": []
+    },
+    "user-data-client": {
+      "tags": []
+    },
+    "user-store": {
+      "tags": []
+    },
+    "auth": {
+      "tags": []
+    },
+    "modal": {
+      "tags": []
     }
   }
 }

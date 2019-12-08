@@ -3,7 +3,7 @@ import { ActivityEntity } from '@reactivity/entity';
 import { ActivityService } from './activity.service';
 import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(AuthGuard()) // no strategry identifir needed since jwt is default -- see AuthModule
+@UseGuards(AuthGuard('jwt'))
 @Controller('activity')
 export class ActivityController {
 

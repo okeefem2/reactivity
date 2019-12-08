@@ -22,6 +22,6 @@ export class UsersService {
 
   async insert(user: User): Promise<User> {
     const insertResult = await this.userRepository.insert(user);
-    return { id: insertResult.identifiers[0].id, username: user.username };
+    return { id: insertResult.identifiers[0].id, username: user.username, email: user.email };
   }
 }

@@ -1,8 +1,8 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import './activity-form.scss';
 import { Segment, Form, Grid } from 'semantic-ui-react';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 import { v4 as uuid } from 'uuid';
 import { activityContext } from '@reactivity/activity-store';
 import { RouteComponentProps } from 'react-router';
@@ -62,7 +62,8 @@ export const ActivityForm: React.FC<RouteComponentProps<ActivityFormParams>> =
     }
 
     const renderForm = (
-      { handleSubmit, form, submitting, pristine, values, invalid }: { handleSubmit: any; form: any; submitting: any; pristine: any; values: ActivityFormData; invalid; }
+      { handleSubmit, form, submitting, pristine, values, invalid }:
+      { handleSubmit: any; form: any; submitting: any; pristine: any; values: ActivityFormData; invalid; }
     ) => {
       return (
         <Form onSubmit={handleSubmit}>

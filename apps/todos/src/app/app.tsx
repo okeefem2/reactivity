@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import './app.scss';
-import { Todo } from '@reactivity/common';
+import { Todo } from '@reactivity/model';
 
 export const App = () => {
 

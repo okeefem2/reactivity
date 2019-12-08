@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { Value } from '@reactivity/common';
+import { Value } from '@reactivity/model';
 import { List } from 'semantic-ui-react'
 
 interface ExampleState {

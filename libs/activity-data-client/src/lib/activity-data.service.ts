@@ -1,5 +1,5 @@
 import { get, post, put, del } from '@reactivity/common';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 
 const apiBase = '/api/activity';
 // const apiBase = '/dotnet/activity';

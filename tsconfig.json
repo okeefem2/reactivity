@@ -27,7 +27,11 @@
       "@reactivity/entity": ["libs/entity/src/index.ts"],
       "@reactivity/home": ["libs/home/src/index.ts"],
       "@reactivity/loading-store": ["libs/loading-store/src/index.ts"],
-      "@reactivity/model": ["libs/model/src/index.ts"]
+      "@reactivity/model": ["libs/model/src/index.ts"],
+      "@reactivity/user-data-client": ["libs/user-data-client/src/index.ts"],
+      "@reactivity/user-store": ["libs/user-store/src/index.ts"],
+      "@reactivity/auth": ["libs/auth/src/index.ts"],
+      "@reactivity/modal": ["libs/modal/src/index.ts"]
     }
   },
   "include": ["./typings/**/*.ts"],

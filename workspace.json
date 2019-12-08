@@ -520,6 +520,114 @@
           }
         }
       }
+    },
+    "user-data-client": {
+      "root": "libs/user-data-client",
+      "sourceRoot": "libs/user-data-client/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/user-data-client/.eslintrc",
+            "tsConfig": [
+              "libs/user-data-client/tsconfig.lib.json",
+              "libs/user-data-client/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user-data-client/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user-data-client/jest.config.js",
+            "tsConfig": "libs/user-data-client/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "user-store": {
+      "root": "libs/user-store",
+      "sourceRoot": "libs/user-store/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/user-store/.eslintrc",
+            "tsConfig": [
+              "libs/user-store/tsconfig.lib.json",
+              "libs/user-store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user-store/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user-store/jest.config.js",
+            "tsConfig": "libs/user-store/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "auth": {
+      "root": "libs/auth",
+      "sourceRoot": "libs/auth/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/auth/.eslintrc",
+            "tsConfig": [
+              "libs/auth/tsconfig.lib.json",
+              "libs/auth/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/auth/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/auth/jest.config.js",
+            "tsConfig": "libs/auth/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "modal": {
+      "root": "libs/modal",
+      "sourceRoot": "libs/modal/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/modal/.eslintrc",
+            "tsConfig": [
+              "libs/modal/tsconfig.lib.json",
+              "libs/modal/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/modal/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/modal/jest.config.js",
+            "tsConfig": "libs/modal/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

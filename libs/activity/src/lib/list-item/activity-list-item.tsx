@@ -5,7 +5,7 @@ import { activityContext } from '@reactivity/activity-store';
 import { Link } from 'react-router-dom';
 
 import './activity-list-item.scss';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 import { format } from 'date-fns';
 
 export interface ActivityListItemProps {

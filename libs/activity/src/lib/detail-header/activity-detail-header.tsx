@@ -2,7 +2,7 @@ import React from 'react';
 
 import './activity-detail-header.scss';
 import { Segment, Item, Header, Button, Image } from 'semantic-ui-react';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 /* eslint-disable-next-line */

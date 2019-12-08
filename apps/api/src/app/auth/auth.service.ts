@@ -19,16 +19,17 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User): Promise<{ access_token: any }> {
-    const payload = { username: user.username, sub: user.id };
+  async login(user: User): Promise<User> {
+    const payload = { username: user.username, sub: user.id, email: user.email };
     return {
+      ...user,
       access_token: this.jwtService.sign(payload),
     };
   }
 
-  async createUser(username: string, pass: string): Promise<User> {
+  async createUser(username: string, pass: string, email: string): Promise<User> {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(pass, salt);
-    return this.usersService.insert({ username, password: hash });
+    return this.usersService.insert({ username, password: hash, email });
   }
 }

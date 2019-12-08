@@ -9,6 +9,18 @@ const sleep = (ms: number) =>
   (response: AxiosResponse) =>
     new Promise<AxiosResponse>(resolve => setTimeout(() => resolve(response), ms))
 
+axios.interceptors.request.use((config) => {
+  const token = window.localStorage.getItem('jwt');
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config
+}, error => {
+  console.log(error);
+  Promise.reject(error);
+});
+
 axios.interceptors.response.use(undefined, (error) => {
   console.log('Http Error', error);
   const { status, data, config } = error.response;
@@ -22,6 +34,7 @@ axios.interceptors.response.use(undefined, (error) => {
     toast.error('Server Error!');
   }
   loadingStore.toggleLoading(false);
+  throw error.response;
 });
 
 export function get<TResponse = any>(url: string): Promise<TResponse> {

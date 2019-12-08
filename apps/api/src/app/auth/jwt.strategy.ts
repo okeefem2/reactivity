@@ -17,6 +17,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   // Invoked with the decoded jwt once it has been verified. If it is invalid a 401 will be thrown previous
   // to this being invoked
   async validate(payload: any): Promise<User> {
-    return { id: payload.sub, username: payload.username };
+    return { id: payload.sub, username: payload.username, email: payload.email };
   }
 }

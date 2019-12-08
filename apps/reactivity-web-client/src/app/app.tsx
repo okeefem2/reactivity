@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
 import './app.scss';
 import { NavBarComponent, NotFound } from '@reactivity/components';
@@ -8,13 +8,23 @@ import { observer } from 'mobx-react-lite';
 import { loadingContext } from '@reactivity/loading-store';
 import { LoadingComponent } from '@reactivity/components';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { LoginComponent } from '@reactivity/auth';
+import { userContext } from '@reactivity/user-store';
+import { ModalContainer } from '@reactivity/modal';
 const App: React.FC<RouteComponentProps> = observer(({ location }) => {
   // TODO use a loading store
   const loadingStore = useContext(loadingContext);
+  const userStore = useContext(userContext);
+
+  useEffect(() => {
+    if (window.localStorage.getItem('jwt') && !userStore.isLoggedIn) {
+      userStore.getCurrentUser();
+    }
+  }, [userStore.isLoggedIn])
 
   return (
     <Fragment>
+      <ModalContainer />
       <ToastContainer position={toast.POSITION.TOP_RIGHT} />
       {
         loadingStore.loading &&
@@ -27,6 +37,7 @@ const App: React.FC<RouteComponentProps> = observer(({ location }) => {
             <NavBarComponent />
 
             <Switch>
+              <Route path="/login" component={LoginComponent} />
               <Route path="/activities" component={ActivityComponent} />
               <Route path="/activity/:id" component={ActivityDetail} />
               <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />

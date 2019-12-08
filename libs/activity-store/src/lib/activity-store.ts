@@ -1,6 +1,6 @@
 import { observable, action, computed, configure, runInAction } from 'mobx';
-import { createContext, useContext } from 'react';
-import { Activity, routerHistory } from '@reactivity/common';
+import { createContext } from 'react';
+import { Activity } from '@reactivity/model';
 import { list, deleteById, update, create, getById } from '@reactivity/activity-data-client';
 import { loadingStore } from '@reactivity/loading-store';
 import { format } from 'date-fns';

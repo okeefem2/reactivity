@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode } from 'react'
 import { ItemGroup, Segment, Label } from 'semantic-ui-react';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 
 import './activity-list.scss';
 import { ActivityListItem } from '../list-item/activity-list-item';

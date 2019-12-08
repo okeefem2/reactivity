@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './activity-detail-info.scss';
-import { Activity } from '@reactivity/common';
+import { Activity } from '@reactivity/model';
 import { Segment, Grid, Icon } from 'semantic-ui-react';
 import { format } from 'date-fns';
 
