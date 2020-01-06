@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './activity-detail-header.scss';
 import { Segment, Item, Header, Button, Image } from 'semantic-ui-react';
 import { Activity } from '@reactivity/model';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { activityContext } from '@reactivity/activity-store';
 /* eslint-disable-next-line */
 export interface ActivityDetailHeaderProps {
   activity: Activity;
@@ -26,6 +27,7 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
   };
 
   const activityCategoryImage = activity && activity.category ? `categoryImages/${activity.category.toLowerCase()}.jpg` : 'placeholder.png'
+  const activityStore = useContext(activityContext);
 
   return activity && (
     <Segment.Group>
@@ -50,11 +52,18 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
         </Segment>
       </Segment>
       <Segment clearing attached='bottom'>
-        <Button color='teal'>Join Activity</Button>
-        <Button>Cancel attendance</Button>
-        <Button color='orange' floated='right' as={Link} to={`/edit-activity/${activity.id}`}>
-          Manage Event
-            </Button>
+        {
+          activity.isHost ?
+            <Button color='orange' floated='right' as={Link} to={`/edit-activity/${activity.id}`}>
+              Manage Event
+            </Button> :
+            (
+              activity.isGoing ?
+                <Button onClick={() => activityStore.leaveActivity(activity.id)}>Cancel attendance</Button> :
+                <Button color='teal' onClick={() => activityStore.attendActivity(activity.id)}>Join Activity</Button>
+            )
+        }
+
       </Segment>
     </Segment.Group>
   );

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import './activity-list-item.scss';
 import { Activity } from '@reactivity/model';
 import { format } from 'date-fns';
+import ActivityListItemAttendees from '../list-item-attendees/activity-list-item-attendees';
 
 export interface ActivityListItemProps {
   activity: Activity;
@@ -14,19 +15,34 @@ export interface ActivityListItemProps {
 
 export const ActivityListItem = ({ activity }) => {
   const activityStore = useContext(activityContext);
+  const host = activity.attendees && activity.attendees.find(a => a.isHost);
 
   return (
     <Segment.Group>
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image size='tiny' src='/assets/placeholder.png' />
+            <Item.Image size='tiny' src={(host && host.user && host.user.image) || `/assets/placeholder.png`} />
 
             <Item.Content>
-              <Item.Header as='a'>{activity.title}</Item.Header>
+              <Item.Header as={Link} to={`/activities/${activity.id}`}>{activity.title}</Item.Header>
               <Item.Description>
-                Hosted By Michael!
-            </Item.Description>
+                Hosted By {host && host.user && host.user.username}
+              </Item.Description>
+              {
+                activity.isHost &&
+                <Item.Description>
+                  <Label basic color='orange' content='You are hosting this activity' />
+                </Item.Description>
+              }
+
+              {
+                !activity.isHost && activity.isGoing &&
+                <Item.Description>
+                  <Label basic color='green' content='You are going to this activity' />
+                </Item.Description>
+              }
+
               <Item.Extra>
                 <div className="activity-list__item-extra">
                   <Label basic content={activity.category} />
@@ -44,7 +60,7 @@ export const ActivityListItem = ({ activity }) => {
         <Icon name='marker' /> {activity.venue}, {activity.city}
       </Segment>
       <Segment secondary>
-        Attendees
+        <ActivityListItemAttendees attendees={activity.attendees} />
       </Segment>
       <Segment>
         <span>{activity.description}</span>
@@ -52,7 +68,7 @@ export const ActivityListItem = ({ activity }) => {
           <button
             className="btn btn--pill btn--pill__primary ml10">
             View
-                        </button>
+          </button>
         </Link>
         <button onClick={() => activityStore.deleteActivity(activity.id)}
           name={activity.id}

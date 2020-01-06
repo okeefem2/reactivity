@@ -1,3 +1,4 @@
+import { UserActivity } from './user-activity';
 
 export class Activity {
   id: string;
@@ -7,4 +8,7 @@ export class Activity {
   date: Date;
   city: string;
   venue: string;
+  isGoing: boolean;
+  isHost: boolean;
+  attendees: UserActivity[];
 }

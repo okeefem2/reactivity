@@ -1,7 +1,7 @@
 import { observable, action, computed, configure, runInAction } from 'mobx';
 import { createContext } from 'react';
 import { Activity } from '@reactivity/model';
-import { list, deleteById, update, create, getById } from '@reactivity/activity-data-client';
+import { list, deleteById, update, create, getById, attend, leave } from '@reactivity/activity-data-client';
 import { loadingStore } from '@reactivity/loading-store';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
@@ -42,7 +42,7 @@ class ActivityStore {
 
       runInAction('Loading Activities', () => {
         activities.forEach(activity => {
-          this.activityRegistry.set(activity.id, activity);
+          activity && this.activityRegistry.set(activity.id, activity);
         });
       });
     } catch (e) {
@@ -142,13 +142,52 @@ class ActivityStore {
     } catch (e) {
       // Rollback in case of error
       console.error(e);
-      toast.error('Error creating updating activity!');
+      toast.error('Error updating activity!');
       // activities.splice(updateIndex, 0, previousActivities[0]);
       // this.activities = [...activities];
       runInAction('Rollback update activity', () => this.activityRegistry.set(activity.id, previousActivity));
     }
     loadingStore.toggleLoading(false);
     return activity;
+  }
+
+  @action attendActivity = async (activityId: string): Promise<void> => {
+    loadingStore.toggleLoading(true, 'Attending Activity')
+
+
+    try {
+      const activity = await attend(activityId);
+      runInAction('Update attendance', () => {
+        this.activityRegistry.set(activityId, activity);
+        this.activity = activity;
+      });
+    } catch (e) {
+      // Rollback in case of error
+      console.error(e);
+      toast.error('Error attending activity!');
+    }
+    loadingStore.toggleLoading(false);
+    return;
+  }
+
+  @action leaveActivity = async (activityId: string): Promise<void> => {
+    loadingStore.toggleLoading(true, 'Leaving Activity')
+
+
+    try {
+      const activity = await leave(activityId);
+      debugger;
+      runInAction('Update attendance', () => {
+        this.activityRegistry.set(activityId, activity);
+        this.activity = activity;
+      });
+    } catch (e) {
+      // Rollback in case of error
+      console.error(e);
+      toast.error('Error leaving activity!');
+    }
+    loadingStore.toggleLoading(false);
+    return;
   }
 }
 

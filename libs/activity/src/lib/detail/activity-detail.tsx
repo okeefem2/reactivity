@@ -40,7 +40,7 @@ export const ActivityDetail: React.FC<RouteComponentProps<ActivityDetailParams>>
           <ActivityDetailChat activity={activity}></ActivityDetailChat>
         </Grid.Column>
         <Grid.Column width={6}>
-          <ActivityDetailSidebar activity={activity}></ActivityDetailSidebar>
+          <ActivityDetailSidebar attendees={activity.attendees}></ActivityDetailSidebar>
         </Grid.Column>
       </Grid>
     ) : (

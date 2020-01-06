@@ -8,6 +8,7 @@ import { routerHistory } from '@reactivity/common';
 class UserStore {
 
   constructor() {
+    // Runs when the token changes reference
     reaction(
       () => this.token,
       token => {
@@ -88,5 +89,5 @@ class UserStore {
     routerHistory.push('/home');
   }
 }
-
-export const userContext = createContext(new UserStore());
+export const userStore = new UserStore();
+export const userContext = createContext(userStore);

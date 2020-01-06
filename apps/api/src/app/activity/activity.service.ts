@@ -4,6 +4,7 @@ import { Repository, FindManyOptions, DeleteResult, InsertResult, UpdateResult }
 import { ActivityEntity } from '@reactivity/entity';
 
 const ACTIVITY_NOT_FOUND_ERROR = { errors: { activity: 'Not Found' } };
+
 @Injectable()
 export class ActivityService {
 
@@ -13,7 +14,17 @@ export class ActivityService {
   ) { }
 
   findAll(): Promise<ActivityEntity[]> {
-    return this.activityRepository.find();
+    return this.activityRepository.createQueryBuilder('activity')
+      .leftJoinAndSelect('activity.attendees', 'attendee')
+      .leftJoinAndSelect('attendee.user', 'user')
+      .select([
+        'activity',
+        'attendee.isHost',
+        'user.username',
+        'user.email',
+        'user.image',
+      ])
+      .getMany();;
   }
 
   paginate(options: FindManyOptions<ActivityEntity>): Promise<ActivityEntity[]> {
@@ -21,7 +32,19 @@ export class ActivityService {
   }
 
   async findById(id?: string): Promise<ActivityEntity> {
-    const activity = await this.activityRepository.findOne(id);
+    // const activity = await this.activityRepository.findOne(id, { relations: ['attendees'] });
+    const activity = await this.activityRepository.createQueryBuilder('activity')
+      .leftJoinAndSelect('activity.attendees', 'attendee')
+      .leftJoinAndSelect('attendee.user', 'user')
+      .select([
+        'activity',
+        'attendee.isHost',
+        'user.username',
+        'user.email',
+        'user.image',
+      ])
+      .where("activity.id = :id", { id: id })
+      .getOne();
 
     if (!activity) {
       // For some reason my message is not being used...
@@ -32,7 +55,10 @@ export class ActivityService {
   }
 
   async find(criteria: Partial<ActivityEntity>): Promise<ActivityEntity[]> {
-    const activity = await this.activityRepository.find(criteria);
+    const activity = await this.activityRepository.find({
+      ...criteria,
+      relations: ['attendees']
+    });
     if (!activity) {
       // For some reason my message is not being used...
       throw new HttpException(ACTIVITY_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);

@@ -1,10 +1,11 @@
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
+import { UserActivityEntity } from './user-activity.entity';
 
 // https://github.com/typestack/class-validator#validation-decorators
 @Entity({ name: 'activity' })
 export class ActivityEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   readonly id: string;
 
   @IsNotEmpty()
@@ -30,4 +31,7 @@ export class ActivityEntity {
   @IsNotEmpty()
   @Column('text')
   readonly venue: string;
+
+  @OneToMany('UserActivityEntity', 'activity')
+  attendees: UserActivityEntity[];
 }
