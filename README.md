@@ -30,6 +30,7 @@ npm install react-final-form final-form
 
 Nest authentication with passport <https://docs.nestjs.com/techniques/authentication>
 nx g @nestjs/schematics:module auth --source-root apps/api/src --path app
+nx g @nestjs/schematics:module photos --source-root apps/api/src --path app
 nx generate @nestjs/schematics:service auth --source-root apps/api/src --path app
 nx g @nestjs/schematics:module users --source-root apps/api/src --path app
 nx generate @nestjs/schematics:service users --source-root apps/api/src --path app
@@ -40,3 +41,6 @@ user-activity --source-root apps/api/src --path app
 `curl -X POST http://localhost:3333/api/auth/create -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"`
 
 `curl -X POST http://localhost:3333/api/auth/login -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"`
+
+Environment config management:
+<https://docs.nestjs.com/techniques/configuration>
