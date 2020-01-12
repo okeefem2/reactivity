@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, Request, UseGuards, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from '@reactivity/model';
 import { AuthGuard } from '@nestjs/passport';
@@ -11,6 +11,11 @@ export class UserController {
   @Get()
   currentUser(@Request() req): Promise<User> {
     console.log('User!', req.user);
-    return req.user;
+    return this.usersService.getProfile(req.user.username);
+  }
+
+  @Get(':username')
+  getProfile(@Param('username') username: string) {
+    return this.usersService.getProfile(username);
   }
 }

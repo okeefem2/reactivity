@@ -24,7 +24,7 @@ export class ActivityService {
         'user.email',
         'user.image',
       ])
-      .getMany();;
+      .getMany();
   }
 
   paginate(options: FindManyOptions<ActivityEntity>): Promise<ActivityEntity[]> {

@@ -24,4 +24,22 @@ export class UsersService {
     const insertResult = await this.userRepository.insert(user);
     return { id: insertResult.identifiers[0].id, username: user.username, email: user.email };
   }
+
+  async getProfile(username: string): Promise<User> {
+    return this.userRepository.createQueryBuilder('user')
+      .leftJoinAndSelect('user.photos', 'photo')
+      .select([
+        'user.id',
+        'user.username',
+        'user.bio',
+        'photo.id',
+        'photo.url',
+        'photo.isMain',
+      ])
+      .where("user.username = :username", { username })
+      .getOne().then(u => {
+        const mainImage = u.photos && u.photos.find(p => p.isMain);
+        return { ...u, image: mainImage && mainImage.url };
+      });
+  }
 }

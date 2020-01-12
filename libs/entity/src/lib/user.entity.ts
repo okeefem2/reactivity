@@ -1,6 +1,7 @@
 import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
 import { IsNotEmpty, IsEmail } from 'class-validator';
 import { UserActivityEntity } from './user-activity.entity';
+import { PhotoEntity } from './photo.entity';
 
 // https://github.com/typestack/class-validator#validation-decorators
 @Entity({ name: 'user' })
@@ -29,8 +30,11 @@ export class UserEntity {
     type: "text",
     nullable: true,
   })
-  readonly image?: string;
+  readonly bio?: string;
 
   @OneToMany('UserActivityEntity', 'user')
   activities: UserActivityEntity[];
+
+  @OneToMany('PhotoEntity', 'user')
+  photos: PhotoEntity[];
 }

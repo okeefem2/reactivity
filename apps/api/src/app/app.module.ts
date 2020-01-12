@@ -9,9 +9,9 @@ import { config } from '../config/typeorm.config';
 import { LoggingMiddleware } from './middleware/logging-middleware';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { UserActivityService } from './user-activity/user-activity.service';
 import { UserActivityModule } from './user-activity/user-activity.module';
-
+import { ConfigModule } from '@nestjs/config';
+import { PhotosModule } from './photos/photos.module';
 @Module({
   imports: [
     ActivityModule,
@@ -21,6 +21,10 @@ import { UserActivityModule } from './user-activity/user-activity.module';
       ...config
     }),
     AuthModule,
+    ConfigModule.forRoot({
+      envFilePath: './apps/api/src/config/.env',
+    }),
+    PhotosModule
   ],
   controllers: [AppController],
   providers: [AppService],
