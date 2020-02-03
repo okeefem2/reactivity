@@ -33,6 +33,12 @@ export class UserEntity {
   })
   readonly bio?: string;
 
+  @Column({
+    type: "text",
+    nullable: true,
+  })
+  readonly bio?: string;
+
   @OneToMany('UserActivityEntity', 'user')
   activities: UserActivityEntity[];
 
