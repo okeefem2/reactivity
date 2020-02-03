@@ -5,11 +5,12 @@
     "allowSyntheticDefaultImports": true,
     "types": [
       "node",
-      "jest"
+      "jest",
     ]
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx"
+    "../../typings/react-cropper.d.ts",
+    "**/*.tsx",
   ]
 }

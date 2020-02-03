@@ -18,7 +18,7 @@
             "assets": ["apps/todos/src/favicon.ico", "apps/todos/src/assets"],
             "styles": ["apps/todos/src/styles.scss"],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/babel"
+            "webpackConfig": "@nrwl/react/plugins/webpack"
           },
           "configurations": {
             "production": {
@@ -213,7 +213,7 @@
               "./node_modules/react-widgets/dist/css/react-widgets.css"
             ],
             "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/babel"
+            "webpackConfig": "@nrwl/react/plugins/webpack"
           },
           "configurations": {
             "production": {
@@ -628,6 +628,87 @@
           }
         }
       }
+    },
+    "profile": {
+      "root": "libs/profile",
+      "sourceRoot": "libs/profile/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/profile/.eslintrc",
+            "tsConfig": [
+              "libs/profile/tsconfig.lib.json",
+              "libs/profile/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/profile/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/profile/jest.config.js",
+            "tsConfig": "libs/profile/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "upload": {
+      "root": "libs/upload",
+      "sourceRoot": "libs/upload/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/upload/.eslintrc",
+            "tsConfig": [
+              "libs/upload/tsconfig.lib.json",
+              "libs/upload/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/upload/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/upload/jest.config.js",
+            "tsConfig": "libs/upload/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "comment-store": {
+      "root": "libs/comment-store",
+      "sourceRoot": "libs/comment-store/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/comment-store/.eslintrc",
+            "tsConfig": [
+              "libs/comment-store/tsconfig.lib.json",
+              "libs/comment-store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/comment-store/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/comment-store/jest.config.js",
+            "tsConfig": "libs/comment-store/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {
@@ -684,5 +765,5 @@
       }
     }
   },
-  "defaultProject": "booking"
+  "defaultProject": "reactivity-web-client"
 }

@@ -1,6 +1,7 @@
 import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
 import { UserActivityEntity } from './user-activity.entity';
+import { CommentEntity } from './comment.entity';
 
 // https://github.com/typestack/class-validator#validation-decorators
 @Entity({ name: 'activity' })
@@ -34,4 +35,7 @@ export class ActivityEntity {
 
   @OneToMany('UserActivityEntity', 'activity')
   attendees: UserActivityEntity[];
+
+  @OneToMany('CommentEntity', 'activity')
+  comments: CommentEntity[];
 }

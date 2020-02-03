@@ -34,7 +34,7 @@ export const NavBarComponent =
               <Image avatar spaced='right' src={userStore.currentUser.image || '/assets/user.png'} />
               <Dropdown pointing='top left' text={userStore.currentUser.username}>
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to={`/profile/username`} text='My profile' icon='user' />
+                  <Dropdown.Item as={Link} to={`/profile/${userStore.currentUser.username}`} text='My profile' icon='user' />
                   <Dropdown.Item onClick={() => userStore.logout()} text='Logout' icon='power' />
                 </Dropdown.Menu>
               </Dropdown>

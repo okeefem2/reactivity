@@ -21,10 +21,9 @@ export class ActivityService {
         'activity',
         'attendee.isHost',
         'user.username',
-        'user.email',
-        'user.image',
+        'user.email'
       ])
-      .getMany();
+      .getMany().then((activities) => activities.map(this.addMainPhotoToAttendee));
   }
 
   paginate(options: FindManyOptions<ActivityEntity>): Promise<ActivityEntity[]> {
@@ -36,15 +35,18 @@ export class ActivityService {
     const activity = await this.activityRepository.createQueryBuilder('activity')
       .leftJoinAndSelect('activity.attendees', 'attendee')
       .leftJoinAndSelect('attendee.user', 'user')
+      .leftJoinAndSelect('user.photos', 'photo')
       .select([
         'activity',
         'attendee.isHost',
         'user.username',
         'user.email',
-        'user.image',
+        'photo.id',
+        'photo.url',
+        'photo.isMain',
       ])
       .where("activity.id = :id", { id: id })
-      .getOne();
+      .getOne().then(this.addMainPhotoToAttendee);
 
     if (!activity) {
       // For some reason my message is not being used...
@@ -94,5 +96,14 @@ export class ActivityService {
    */
   save(activity: ActivityEntity): Promise<ActivityEntity> {
     return this.activityRepository.save(activity);
+  }
+
+  private addMainPhotoToAttendee(activity: ActivityEntity) {
+    // YIKES lol
+    activity.attendees = activity.attendees && activity.attendees.map(attendee => {
+      const mainImage = attendee.user && attendee.user.photos && attendee.user.photos.find(p => p.isMain);
+      return { ...attendee, user: { ...attendee.user, image: mainImage && mainImage.url } };
+    });
+    return activity;
   }
 }

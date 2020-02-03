@@ -6,6 +6,8 @@
 import 'core-js/stable';
 
 import 'regenerator-runtime/runtime';
+(window as any).global = window;
+
 
 /**
  * This file contains polyfills loaded on all browsers

@@ -11,7 +11,7 @@ export interface DateInputProps
   extends FieldRenderProps<Date, HTMLInputElement>, FormFieldProps {
 }
 
-export const DateInput =
+export const DateInput: React.FC =
   ({ input, width, type, placeholder, date = false, time = false, meta: { touched, error }, ...rest }: DateInputProps) => {
     return (
       <Form.Field error={touched && !!error}>
@@ -23,7 +23,6 @@ export const DateInput =
           onChange={input.onChange}
           onKeyDown={(e) => e.preventDefault}
           onBlur={input.onBlur}
-          {...rest}
         />
         {touched && error && (
           <Label basic color="red">

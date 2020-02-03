@@ -10,14 +10,14 @@ export class UserActivityEntity {
   userId: string;
 
   @ManyToOne(type => UserEntity, user => user.activities)
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
   @PrimaryColumn('uuid')
   activityId: string;
 
   @ManyToOne(type => ActivityEntity, activity => activity.attendees)
-  @JoinColumn({ name: "activityId" })
+  @JoinColumn({ name: 'activityId' })
   activity: ActivityEntity;
 
   @IsNotEmpty()

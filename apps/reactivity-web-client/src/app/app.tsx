@@ -10,11 +10,15 @@ import { LoadingComponent } from '@reactivity/components';
 import { ToastContainer, toast } from 'react-toastify';
 import { LoginComponent } from '@reactivity/auth';
 import { userContext } from '@reactivity/user-store';
+import { commentContext } from '@reactivity/comment-store';
 import { ModalContainer } from '@reactivity/modal';
+import { ProfileComponent } from '@reactivity/profile';
+
 const App: React.FC<RouteComponentProps> = observer(({ location }) => {
   // TODO use a loading store
   const loadingStore = useContext(loadingContext);
   const userStore = useContext(userContext);
+  const commentStore = useContext(commentContext);
 
   useEffect(() => {
     if (window.localStorage.getItem('jwt') && !userStore.isLoggedIn) {
@@ -40,6 +44,7 @@ const App: React.FC<RouteComponentProps> = observer(({ location }) => {
               <Route path="/login" component={LoginComponent} />
               <Route path="/activities" component={ActivityComponent} />
               <Route path="/activity/:id" component={ActivityDetail} />
+              <Route path="/profile/:username" component={ProfileComponent} />
               <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
               <Route component={NotFound} />
             </Switch>

@@ -7,3 +7,4 @@ export * from './form/text-input/text-input';
 export * from './form/text-area-input/text-area-input';
 export * from './form/select-input/select-input';
 export * from './form/date-input/date-input';
+export * from './upload/upload';

@@ -38,6 +38,7 @@ export class UsersService {
       ])
       .where("user.username = :username", { username })
       .getOne().then(u => {
+        console.log('user profile', u);
         const mainImage = u.photos && u.photos.find(p => p.isMain);
         return { ...u, image: mainImage && mainImage.url };
       });

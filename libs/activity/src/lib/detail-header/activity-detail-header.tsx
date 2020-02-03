@@ -28,6 +28,8 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
 
   const activityCategoryImage = activity && activity.category ? `categoryImages/${activity.category.toLowerCase()}.jpg` : 'placeholder.png'
   const activityStore = useContext(activityContext);
+  const host = activity.attendees && activity.attendees.find(a => a.isHost);
+
 
   return activity && (
     <Segment.Group>
@@ -36,6 +38,12 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
         <Segment basic style={activityImageTextStyle}>
           <Item.Group>
             <Item>
+              <Item.Image
+                size='tiny'
+                circular
+                src={host.user.image || '/assets/user.png'}
+                style={{ marginBottom: 3 }}
+              />
               <Item.Content>
                 <Header
                   size='huge'
@@ -45,6 +53,11 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
                 <p>{format(activity.date, 'eeee do MMMM')}</p>
                 <p>
                   {activity.description}
+                </p>
+                <p>
+                  Hosted by <Link to={`/profile/${host && host.user && host.user.username}`}>
+                    {host && host.user && host.user.username}
+                  </Link>
                 </p>
               </Item.Content>
             </Item>

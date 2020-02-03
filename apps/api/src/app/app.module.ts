@@ -12,11 +12,14 @@ import { UsersModule } from './users/users.module';
 import { UserActivityModule } from './user-activity/user-activity.module';
 import { ConfigModule } from '@nestjs/config';
 import { PhotosModule } from './photos/photos.module';
+import { CommentModule } from './comment/comment.module';
 @Module({
   imports: [
     ActivityModule,
     UsersModule,
     UserActivityModule,
+    PhotosModule,
+    CommentModule,
     TypeOrmModule.forRoot({
       ...config
     }),
@@ -24,7 +27,6 @@ import { PhotosModule } from './photos/photos.module';
     ConfigModule.forRoot({
       envFilePath: './apps/api/src/config/.env',
     }),
-    PhotosModule
   ],
   controllers: [AppController],
   providers: [AppService],

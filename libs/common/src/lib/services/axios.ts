@@ -45,6 +45,17 @@ export function post<TBody = any, TResponse = any>(url: string, body: TBody): Pr
   return axios.post<TResponse>(url, body).then(sleep(1000)).then(responseBody);
 }
 
+export function postFile<TResponse = any>(url: string, file: Blob): Promise<TResponse> {
+  let formData = new FormData();
+  formData.append('file', file); // Key matches what is expected in the interceptor of photo controller
+  return axios.post<TResponse>(url, formData, {
+    headers: {
+      'Content-type': 'multipart/form-data'
+    }
+  })
+    .then(sleep(1000)).then(responseBody);
+}
+
 export function put<TBody = any, TResponse = any>(url: string, body: TBody): Promise<TResponse> {
   return axios.put<TResponse>(url, body).then(sleep(1000)).then(responseBody);
 }

@@ -1,10 +1,12 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PhotoEntity } from 'libs/entity/src/lib/photo.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { unlinkSync } from 'fs';
 const cloudinary = require('cloudinary').v2;
+
+const PHOTO_NOT_FOUND_ERROR = { errors: { photo: 'Not Found' } };
 
 @Injectable()
 export class PhotosService {
@@ -50,6 +52,22 @@ export class PhotosService {
       console.error(e);
       throw new HttpException('Failed to delete photo!', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  async setMain(photoId: string, userId: string): Promise<PhotoEntity> {
+    const updateResult = await this.photoRepository.update(photoId, { isMain: true });
+    // TODO set the others to not main
+    if (updateResult.affected === 0) {
+      throw new HttpException(PHOTO_NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
+    }
+    await this.photoRepository.createQueryBuilder()
+      .update(PhotoEntity)
+      .set({ isMain: false })
+      .where('"userId" = :userId', { userId })
+      .andWhere('id <> :id', { id: photoId })
+      .andWhere('"isMain" = :isMain', { isMain: true })
+      .execute();
+    return this.photoRepository.findOne(photoId);
   }
 
   private configureCloudinary() {

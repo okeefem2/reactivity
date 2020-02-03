@@ -33,7 +33,6 @@ export class PhotosController {
     )
   )
   async addPhoto(@Request() req, @UploadedFile() file): Promise<PhotoEntity> {
-    console.log('fie', file);
     const user = await this.usersService.getProfile(req.user.username);
     return this.photosService.uploadPhotoForUser(file.path, user.id, !user.image);
   }
@@ -41,5 +40,11 @@ export class PhotosController {
   @Delete(':id')
   deletePhoto(@Param('id') id: string): Promise<void> {
     return this.photosService.deletePhoto(id);
+  }
+
+  @Post(':id')
+  async setMain(@Request() req, @Param('id') id: string): Promise<PhotoEntity> {
+    const user = await this.usersService.getProfile(req.user.username);
+    return this.photosService.setMain(id, user.id);
   }
 }

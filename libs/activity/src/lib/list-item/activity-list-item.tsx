@@ -27,7 +27,10 @@ export const ActivityListItem = ({ activity }) => {
             <Item.Content>
               <Item.Header as={Link} to={`/activities/${activity.id}`}>{activity.title}</Item.Header>
               <Item.Description>
-                Hosted By {host && host.user && host.user.username}
+                Hosted By <Link to={`/profile/${host && host.user && host.user.username}`}>
+                  {host && host.user && host.user.username}
+                </Link>
+
               </Item.Description>
               {
                 activity.isHost &&
@@ -74,7 +77,7 @@ export const ActivityListItem = ({ activity }) => {
           name={activity.id}
           className="btn btn--pill btn--pill__danger ml10">
           Delete
-                      </button>
+        </button>
       </Segment>
     </Segment.Group>
   );

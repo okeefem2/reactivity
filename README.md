@@ -17,6 +17,9 @@ nx g @nrwl/react:component activity-detail-chat --directory=detail-chat --projec
 nx g @nrwl/react:component activity-detail-sidebar --directory=detail-sidebar --project=activity
 nx g @nrwl/react:component not-found --directory=not-found --project=components
 to generate a uuid client side
+
+add a component to components lib
+nx g @nrwl/react:component upload-dropzone --directory=dropzone --project=components
 npm install uuid @types/uuid
 
 to generate a general purpose library
@@ -27,6 +30,9 @@ set up api debugger using <https://github.com/nrwl/nx/issues/1175>
 need to install class-transformer and class-validator for validation
 
 npm install react-final-form final-form
+nx g @nestjs/schematics:module comment --source-root apps/api/src --path app
+nx generate @nestjs/schematics:service comment --source-root apps/api/src --path app
+nx generate @nestjs/schematics:controller comment --source-root apps/api/src --path app
 
 Nest authentication with passport <https://docs.nestjs.com/techniques/authentication>
 nx g @nestjs/schematics:module auth --source-root apps/api/src --path app
@@ -44,3 +50,9 @@ user-activity --source-root apps/api/src --path app
 
 Environment config management:
 <https://docs.nestjs.com/techniques/configuration>
+
+Got error Cannot find module '/Users/letheras/Desktop/Dev/repos/udemy/react-mobx-dotnet-core/reactivity/@nrwl/react/plugins/babel' when trying to run the frontend.
+
+npm i -D @babel/core@^7.0.0-0
+
+Cannot read property 'joinColumns' of undefined error

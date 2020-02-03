@@ -2,7 +2,10 @@
   "npmScope": "reactivity",
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.json": "*",
     "tslint.json": "*",
     "nx.json": "*"
@@ -63,6 +66,12 @@
       "tags": []
     },
     "modal": {
+      "tags": []
+    },
+    "profile": {
+      "tags": []
+    },
+    "comment-store": {
       "tags": []
     }
   }

@@ -10,7 +10,6 @@ export class UserController {
 
   @Get()
   currentUser(@Request() req): Promise<User> {
-    console.log('User!', req.user);
     return this.usersService.getProfile(req.user.username);
   }
 

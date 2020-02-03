@@ -29,8 +29,6 @@ export class AuthController {
   @Get()
   currentUser(@Request() req): Promise<User> {
     // Because of the guard, we will only get this far if the jwt is valid still
-    console.log('User!', req.user);
-
-    return this.usersService.findByUsername(req.user.username);
+    return this.usersService.getProfile(req.user.username);
   }
 }

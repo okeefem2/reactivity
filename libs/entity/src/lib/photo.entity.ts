@@ -1,6 +1,6 @@
 import { Column, PrimaryColumn, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
-import { UserEntity } from '..';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'photo' })
 export class PhotoEntity {
@@ -23,7 +23,7 @@ export class PhotoEntity {
   readonly isMain: boolean;
 
   @ManyToOne(type => UserEntity, user => user.activities)
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
   @Column('uuid')
