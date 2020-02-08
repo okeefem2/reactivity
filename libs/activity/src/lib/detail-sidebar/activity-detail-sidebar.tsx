@@ -11,7 +11,7 @@ export interface ActivityDetailSidebarProps {
 }
 
 export const ActivityDetailSidebar = ({ attendees }: ActivityDetailSidebarProps) => {
-  return (
+  return attendees ? (
     <Fragment>
       <Segment
         textAlign='center'
@@ -51,5 +51,5 @@ export const ActivityDetailSidebar = ({ attendees }: ActivityDetailSidebarProps)
         </List>
       </Segment>
     </Fragment>
-  );
+  ) : <></>;
 };

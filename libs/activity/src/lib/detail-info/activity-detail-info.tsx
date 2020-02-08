@@ -11,7 +11,7 @@ export interface ActivityDetailInfoProps {
 }
 
 export const ActivityDetailInfo = ({ activity }: ActivityDetailInfoProps) => {
-  return (
+  return activity ? (
     <Segment.Group>
       <Segment attached='top'>
         <Grid>
@@ -30,7 +30,7 @@ export const ActivityDetailInfo = ({ activity }: ActivityDetailInfoProps) => {
           </Grid.Column>
           <Grid.Column width={15}>
             <span>
-              {format(activity.date, 'eeee do MMMM')} at {format(activity.date, 'h:mm a')}
+              {activity.date && format(activity.date, 'eeee do MMMM')} at {activity.date && format(activity.date, 'h:mm a')}
             </span>
           </Grid.Column>
         </Grid>
@@ -46,5 +46,5 @@ export const ActivityDetailInfo = ({ activity }: ActivityDetailInfoProps) => {
         </Grid>
       </Segment>
     </Segment.Group>
-  );
+  ) : <></>;
 };

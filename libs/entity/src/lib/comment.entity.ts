@@ -18,9 +18,6 @@ export class CommentEntity {
   @Column('text')
   readonly body: string;
 
-  @Column('boolean')
-  readonly isMain: boolean;
-
   @IsNotEmpty()
   @Column('date')
   readonly date: Date | string;

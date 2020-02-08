@@ -41,7 +41,7 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
               <Item.Image
                 size='tiny'
                 circular
-                src={host.user.image || '/assets/user.png'}
+                src={(host && host.user && host.user.image) || '/assets/user.png'}
                 style={{ marginBottom: 3 }}
               />
               <Item.Content>
@@ -50,7 +50,7 @@ export const ActivityDetailHeader = ({ activity }: ActivityDetailHeaderProps) =>
                   content={activity.title}
                   style={{ color: 'white' }}
                 />
-                <p>{format(activity.date, 'eeee do MMMM')}</p>
+                <p>{activity.date && format(activity.date, 'eeee do MMMM')}</p>
                 <p>
                   {activity.description}
                 </p>
