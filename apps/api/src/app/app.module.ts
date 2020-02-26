@@ -13,6 +13,7 @@ import { UserActivityModule } from './user-activity/user-activity.module';
 import { ConfigModule } from '@nestjs/config';
 import { PhotosModule } from './photos/photos.module';
 import { CommentModule } from './comment/comment.module';
+import { UserFollowingModule } from './user-following/user-following.module';
 @Module({
   imports: [
     ActivityModule,
@@ -20,6 +21,7 @@ import { CommentModule } from './comment/comment.module';
     UserActivityModule,
     PhotosModule,
     CommentModule,
+    UserFollowingModule,
     TypeOrmModule.forRoot({
       ...config
     }),

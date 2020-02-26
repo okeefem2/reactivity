@@ -1,7 +1,7 @@
 import { observable, computed, action, runInAction, reaction } from 'mobx';
 import { createContext } from 'react';
 import { User } from '@reactivity/model';
-import { login, register, getCurrentUser, getProfile, uploadProfilePhoto, deleteProfilePhoto, setMainProfilePhoto } from '@reactivity/user-data-client';
+import { login, register, getCurrentUser, getProfile, uploadProfilePhoto, deleteProfilePhoto, setMainProfilePhoto, unfollow, follow, getList } from '@reactivity/user-data-client';
 import { loadingStore } from '@reactivity/loading-store';
 import { routerHistory } from '@reactivity/common';
 
@@ -21,10 +21,25 @@ class UserStore {
         }
       }
     );
+
+    reaction(
+      () => this.activeProfileTab,
+      activeProfileTab => {
+        if (activeProfileTab === 3 || activeProfileTab === 4) {
+          const predicate = activeProfileTab === 3 ? 'followers' : 'following';
+          this.loadFollowings(this.userProfile.username, predicate);
+        } else {
+          this.followings = [];
+        }
+      }
+    );
   }
   @observable currentUser: User;
+  @observable followings: User[] = [];
   @observable userProfile: User;
   @observable token: string;
+  @observable activeProfileTab = 0;
+  @observable initialUserCheck: boolean;
 
   @computed get isLoggedIn(): boolean {
     return !!this.currentUser && !!this.currentUser.id;
@@ -34,6 +49,56 @@ class UserStore {
     return this.isLoggedIn &&
       !!this.userProfile &&
       this.currentUser.username === this.userProfile.username;
+  }
+
+  @action setActiveProfileTab = (index) => {
+    this.activeProfileTab = index;
+  }
+
+  @action loadFollowings = async (username: string, predicate: 'followers' | 'following') => {
+    loadingStore.toggleLoading(true, `Fetching ${predicate}`);
+    try {
+      const followings = await getList(username, predicate);
+      runInAction('Set followings', () => {
+        console.log(followings);
+        this.followings = followings;
+      });
+    } catch (e) {
+      console.log('Error following', e);
+    }
+    loadingStore.toggleLoading(false);
+  }
+
+  @action follow = async (username: string) => {
+    loadingStore.toggleLoading(true, 'Following user');
+    try {
+      const userProfile = await follow(username);
+      runInAction('Follow', () => {
+        console.log(userProfile);
+        this.userProfile!.isFollowed = true;
+        this.userProfile!.followers++;
+        this.currentUser!.following++;
+      });
+    } catch (e) {
+      console.log('Error following', e);
+    }
+    loadingStore.toggleLoading(false);
+  }
+
+  @action unfollow = async (username: string) => {
+    loadingStore.toggleLoading(true, 'unfollowing user');
+    try {
+      const userProfile = await unfollow(username);
+      runInAction('Unfollow', () => {
+        console.log(userProfile);
+        this.userProfile!.isFollowed = false;
+        this.userProfile!.followers--;
+        this.currentUser!.following--;
+      });
+    } catch (e) {
+      console.log('Error unfollowing', e);
+    }
+    loadingStore.toggleLoading(false);
   }
 
   @action getProfile = async (username: string) => {
@@ -50,7 +115,7 @@ class UserStore {
     loadingStore.toggleLoading(false);
   }
 
-  @action getCurrentUser = async () => {
+  @action getCurrentUser = async (initialCheck = false) => {
     loadingStore.toggleLoading(true, 'Checking credentials');
     try {
       const loggedInUser = await getCurrentUser();

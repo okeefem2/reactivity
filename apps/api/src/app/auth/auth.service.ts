@@ -3,6 +3,8 @@ import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { User } from '@reactivity/model';
 import { JwtService } from '@nestjs/jwt';
+import { v4 as uuid } from 'uuid';
+import { UserEntity } from '@reactivity/entity';
 
 @Injectable()
 export class AuthService {
@@ -22,13 +24,13 @@ export class AuthService {
   async login(user: User): Promise<User> {
     const payload = { username: user.username, sub: user.id, email: user.email };
     const access_token = this.jwtService.sign(payload);
-    const fullUser = await this.usersService.getProfile(user.username);
+    const fullUser = await this.usersService.getProfile(user.username, user.username);
     return { ...fullUser, access_token };
   }
 
   async createUser(username: string, pass: string, email: string): Promise<User> {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(pass, salt);
-    return this.usersService.insert({ username, password: hash, email });
+    return this.usersService.insert({ id: uuid(), username, password: hash, email } as UserEntity);
   }
 }

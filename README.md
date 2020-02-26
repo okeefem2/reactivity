@@ -55,4 +55,6 @@ Got error Cannot find module '/Users/letheras/Desktop/Dev/repos/udemy/react-mobx
 
 npm i -D @babel/core@^7.0.0-0
 
-Cannot read property 'joinColumns' of undefined error
+Cannot read property 'joinColumns' of undefined error usually the fix involves some stupid typo or incorrect join association
+
+Pa$$w0rd

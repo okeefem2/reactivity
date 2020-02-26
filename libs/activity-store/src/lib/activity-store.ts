@@ -1,7 +1,7 @@
-import { observable, action, computed, configure, runInAction } from 'mobx';
+import { observable, action, computed, configure, runInAction, reaction } from 'mobx';
 import { createContext } from 'react';
-import { Activity } from '@reactivity/model';
-import { list, deleteById, update, create, getById, attend, leave } from '@reactivity/activity-data-client';
+import { Activity, PageableList, PaginateOptions } from '@reactivity/model';
+import { deleteById, update, create, getById, attend, leave, paginate } from '@reactivity/activity-data-client';
 import { loadingStore } from '@reactivity/loading-store';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
@@ -9,12 +9,61 @@ import { toast } from 'react-toastify';
 export interface ActivityGroups {
   [k: string]: Activity[];
 }
+
+export interface FilterOptions { attending?: boolean, hosting?: boolean, date?: Date }
+export interface PagingOptions { page: number, take: number, }
+
+export const DEFAULT_PAGE_SIZE = 2;
 // ensures that state can only be modified in an action
 configure({ enforceActions: 'always' });
 class ActivityStore {
 
+  // Note in a production app I would set filter params in the url for reuse, and would check those on load here to see if we can load the data
+  constructor() {
+    reaction(
+      () => this.filterOptions,
+      (options?: FilterOptions) => {
+        if (Object.keys(options).length) {
+          this.activityRegistry.clear();
+          this.loadActivities({ ...this.paginateOptions, ...options });
+        } else {
+          this.setPagingOptions({ page: 0, take: DEFAULT_PAGE_SIZE });
+        }
+      }
+    );
+
+    reaction(
+      () => this.pagingOptions,
+      (options: PagingOptions) => {
+        this.loadActivities({ ...this.paginateOptions, ...this.filterOptions });
+      }
+    );
+  }
+  // need to separate paging from filtering
+  @observable filterOptions: FilterOptions = {};
+  @observable pagingOptions: PagingOptions = { page: 0, take: DEFAULT_PAGE_SIZE, };
   @observable activityRegistry = new Map();
   @observable activity: Activity;
+  @observable pageData: PageableList<Activity> = {
+    data: [],
+    totalCount: 0,
+    options: {
+      take: DEFAULT_PAGE_SIZE,
+      skip: 0,
+    }
+  };
+  @observable loadingNextPage = false;
+
+  @computed get paginateOptions() {
+    return { skip: this.pagingOptions.page * this.pagingOptions.take, take: this.pagingOptions.take, }
+  }
+  @computed get totalPages() {
+    return Math.ceil(this.pageData.totalCount / this.pagingOptions.take);
+  }
+
+  @computed get currentPage() {
+    return this.pagingOptions.page;
+  }
 
   @computed get activitiesByDate(): Map<string, Activity[]> {
     // TODO look into performance difference between this and regular objects...
@@ -32,18 +81,27 @@ class ActivityStore {
       }, new Map());
   }
 
-  @action loadActivities = async () => {
+  @action setFilterOptions(options?: FilterOptions) {
+    this.filterOptions = options;
+    this.loadingNextPage = true;
+  }
+
+  @action setPagingOptions(options: PagingOptions) {
+    this.pagingOptions = options;
+    this.loadingNextPage = true;
+  }
+
+  @action loadActivities = async (paginateOptions: PaginateOptions) => {
     loadingStore.toggleLoading(true, 'Loading Activities');
 
     try {
-      const activities = await list();
-      console.log('Activites loaded', activities);
-      // this.activities = activities;
-
+      const activitiesList: PageableList<Activity> = await paginate(paginateOptions);
       runInAction('Loading Activities', () => {
-        activities.forEach(activity => {
+        activitiesList.data.forEach(activity => {
           activity && this.activityRegistry.set(activity.id, activity);
         });
+        this.pageData = activitiesList;
+        this.loadingNextPage = false;
       });
     } catch (e) {
       console.log('Error while loading activities', e);
@@ -129,10 +187,6 @@ class ActivityStore {
   @action updateActivity = async (activity: Activity): Promise<Activity> => {
     loadingStore.toggleLoading(true, 'Updating Activity')
     this.clearSelectedAndLoading();
-    // const activities = [...this.activities];
-    // const updateIndex = activities.findIndex(a => a.id === activity.id);
-    // const previousActivities = activities.splice(updateIndex, 1, activity);
-    // this.activities = [...activities];
 
     const previousActivity = this.activityRegistry.get(activity.id);
     this.activityRegistry.set(activity.id, activity);
@@ -143,8 +197,6 @@ class ActivityStore {
       // Rollback in case of error
       console.error(e);
       toast.error('Error updating activity!');
-      // activities.splice(updateIndex, 0, previousActivities[0]);
-      // this.activities = [...activities];
       runInAction('Rollback update activity', () => this.activityRegistry.set(activity.id, previousActivity));
     }
     loadingStore.toggleLoading(false);

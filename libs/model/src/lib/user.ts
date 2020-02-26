@@ -1,5 +1,6 @@
 import { Photo } from './photo';
 
+// UI and API response model for user
 export interface User {
   id?: string;
   username: string;
@@ -9,4 +10,7 @@ export interface User {
   bio?: string;
   photos?: Photo[];
   access_token?: string;
+  isFollowed?: boolean;
+  followers?: any;
+  following?: any;
 }

@@ -13,7 +13,7 @@ export class UserActivityService {
     private readonly userActivityRepository: Repository<UserActivityEntity>,
   ) { }
 
-  async attend(userId: string, activityId: string, isHost = false) {
+  async attend(userId: string, activityId: string, isHost = false): Promise<UserActivityEntity> {
     return this.userActivityRepository.save({
       userId,
       activityId,

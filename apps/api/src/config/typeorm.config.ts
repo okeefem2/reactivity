@@ -5,6 +5,7 @@ import {
   UserActivityEntity,
   PhotoEntity,
   CommentEntity,
+  UserFollowingEntity,
 } from '@reactivity/entity';
 
 // You can load you .env file here synchronously using dotenv package (not installed here),
@@ -33,5 +34,6 @@ export const config: ConnectionOptions = {
     UserActivityEntity,
     PhotoEntity,
     CommentEntity,
+    UserFollowingEntity,
   ]
 };

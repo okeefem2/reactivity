@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param, UseGuards, Request, Query } from '@nestjs/common';
 import { ActivityEntity } from '@reactivity/entity';
 import { ActivityService } from './activity.service';
 import { AuthGuard } from '@nestjs/passport';
 import { UserActivityService } from '../user-activity/user-activity.service';
 import { UsersService } from '../users/users.service';
+import { skip } from 'rxjs/operators';
+import { PageableList, PaginateOptions } from '@reactivity/model';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('activity')
@@ -17,13 +19,15 @@ export class ActivityController {
   // TODO figure out how to use observables here...
 
   @Get()
-  activities(): Promise<ActivityEntity[]> {
-    return this.activityService.findAll();
+  activities(@Request() req, @Query() { skip, take, ...rest }: PaginateOptions): Promise<PageableList<ActivityEntity>> {
+    console.log(skip);
+    console.log(take);
+    return this.activityService.paginate({ skip: parseInt(skip.toString()), take: parseInt(take.toString()), ...rest }, req.user.username);
   }
 
   @Get(':id')
-  async activity(@Param('id') id: string): Promise<ActivityEntity> {
-    return await this.activityService.findById(id);
+  async activity(@Request() req, @Param('id') id: string): Promise<ActivityEntity> {
+    return await this.activityService.findById(id, req.user.username);
   }
 
   @Post()
@@ -39,20 +43,20 @@ export class ActivityController {
   async attendActivity(@Request() req, @Param('id') id: string): Promise<ActivityEntity> {
     const user = await this.usersService.findByUsername(req.user.username)
     await this.userActivityService.attend(user.id, id);
-    return this.activityService.findById(id);
+    return this.activityService.findById(id, req.user.username);
   }
 
   @Delete(':id/attend')
   async leaveActivity(@Request() req, @Param('id') id: string): Promise<ActivityEntity> {
     const user = await this.usersService.findByUsername(req.user.username)
     await this.userActivityService.leave(user.id, id);
-    return this.activityService.findById(id);
+    return this.activityService.findById(id, req.user.username);
   }
 
   @Put(':id')
-  async updateActivity(@Param('id') id: string, @Body() activity: Partial<ActivityEntity>): Promise<ActivityEntity> {
+  async updateActivity(@Request() req, @Param('id') id: string, @Body() activity: Partial<ActivityEntity>): Promise<ActivityEntity> {
     await this.activityService.update(id, activity);
-    return this.activityService.findById(id);
+    return this.activityService.findById(id, req.user.username);
   }
 
   @Delete(':id')

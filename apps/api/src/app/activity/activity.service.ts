@@ -2,8 +2,10 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindManyOptions, DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { ActivityEntity } from '@reactivity/entity';
+import { PageableList, PaginateOptions } from '@reactivity/model';
 
 const ACTIVITY_NOT_FOUND_ERROR = { errors: { activity: 'Not Found' } };
+
 
 @Injectable()
 export class ActivityService {
@@ -13,29 +15,63 @@ export class ActivityService {
     private readonly activityRepository: Repository<ActivityEntity>,
   ) { }
 
-  findAll(): Promise<ActivityEntity[]> {
-    return this.activityRepository.createQueryBuilder('activity')
+  async paginate(options: PaginateOptions, currentUsername: string): Promise<PageableList<ActivityEntity>> {
+    let query = this.activityRepository.createQueryBuilder('activity')
       .leftJoinAndSelect('activity.attendees', 'attendee')
       .leftJoinAndSelect('attendee.user', 'user')
+      .leftJoinAndSelect('user.followers', 'follower')
       .select([
         'activity',
         'attendee.isHost',
         'user.username',
-        'user.email'
+        'user.email',
+        'follower',
       ])
-      .getMany().then((activities) => activities.map(this.addMainPhotoToAttendee));
+      ;
+    console.log('options', options);
+
+    if (options.hosting !== undefined) {
+      query = query.where('attendee.isHost = :isHosting', { isHosting: options.hosting })
+        .andWhere('user.username = :currentUsername', { currentUsername });
+    }
+
+    if (options.attending !== undefined) {
+      query = query.where('attendee.isHost = :isHosting', { isHosting: false })
+        .andWhere('user.username = :currentUsername', { currentUsername });
+    }
+
+    if (options.date) {
+      query = query.where('activity.date >= :date', { date: options.date });
+    }
+
+    const totalCount = await query.getCount();
+    console.log(query.getSql());
+
+    query = query.offset(options.skip)
+      .limit(options.take);
+
+    return query
+      .getMany()
+      .then((activities) => {
+        console.log(activities);
+        const transformedActivities = activities.map((a) => this.transformAttendee(a, currentUsername));
+
+        return {
+          data: transformedActivities,
+          options,
+          totalCount,
+        };
+      });
   }
 
-  paginate(options: FindManyOptions<ActivityEntity>): Promise<ActivityEntity[]> {
-    return this.activityRepository.find(options);
-  }
-
-  async findById(id?: string): Promise<ActivityEntity> {
+  async findById(id: string, currentUsername: string): Promise<ActivityEntity> {
     // const activity = await this.activityRepository.findOne(id, { relations: ['attendees'] });
+    // TODO add isFollowed to attendee
     const activity = await this.activityRepository.createQueryBuilder('activity')
       .leftJoinAndSelect('activity.attendees', 'attendee')
       .leftJoinAndSelect('attendee.user', 'user')
       .leftJoinAndSelect('user.photos', 'photo')
+      .leftJoinAndSelect('user.followers', 'follower')
       .select([
         'activity',
         'attendee.isHost',
@@ -44,9 +80,10 @@ export class ActivityService {
         'photo.id',
         'photo.url',
         'photo.isMain',
+        'follower',
       ])
-      .where("activity.id = :id", { id: id })
-      .getOne().then(this.addMainPhotoToAttendee);
+      .where('activity.id = :id', { id: id })
+      .getOne().then((activity) => this.transformAttendee(activity, currentUsername));
 
     if (!activity) {
       // For some reason my message is not being used...
@@ -98,12 +135,27 @@ export class ActivityService {
     return this.activityRepository.save(activity);
   }
 
-  private addMainPhotoToAttendee(activity: ActivityEntity) {
+  private transformAttendee(activity: ActivityEntity, currentUsername: string) {
     // YIKES lol
-    activity.attendees = activity.attendees && activity.attendees.map(attendee => {
-      const mainImage = attendee.user && attendee.user.photos && attendee.user.photos.find(p => p.isMain);
-      return { ...attendee, user: { ...attendee.user, image: mainImage && mainImage.url } };
-    });
+    if (activity.attendees) {
+      activity.attendees = activity.attendees.map(attendee => {
+        console.log('attendee', attendee);
+        const mainImage = attendee.user && attendee.user.photos && attendee.user.photos.find(p => p.isMain);
+        let isFollowed = false;
+        if (attendee.user && attendee.user.username !== currentUsername) {
+          isFollowed = attendee.user.followers.some(f => f.followerUsername === currentUsername);
+        }
+        return {
+          ...attendee,
+          user: {
+            ...attendee.user,
+            image: mainImage && mainImage.url,
+            isFollowed
+          }
+        };
+      });
+    }
+
     return activity;
   }
 }

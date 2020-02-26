@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { routerHistory } from '../router-history';
 import { loadingStore } from '@reactivity/loading-store';
 import { toast } from 'react-toastify';
@@ -37,8 +37,9 @@ axios.interceptors.response.use(undefined, (error) => {
   throw error.response;
 });
 
-export function get<TResponse = any>(url: string): Promise<TResponse> {
-  return axios.get<TResponse>(url).then(sleep(1000)).then(responseBody);
+export function get<TResponse = any>(url: string, params?: any): Promise<TResponse> {
+  let config = !!params ? { params } : {};
+  return axios.get<TResponse>(url, config).then(sleep(1000)).then(responseBody);
 }
 
 export function post<TBody = any, TResponse = any>(url: string, body: TBody): Promise<TResponse> {

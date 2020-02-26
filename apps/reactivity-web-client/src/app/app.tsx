@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Route, withRouter, RouteComponentProps, Switch } from 'react-router-dom';
 import './app.scss';
 import { NavBarComponent, NotFound } from '@reactivity/components';
@@ -18,11 +18,13 @@ const App: React.FC<RouteComponentProps> = observer(({ location }) => {
   // TODO use a loading store
   const loadingStore = useContext(loadingContext);
   const userStore = useContext(userContext);
-  const commentStore = useContext(commentContext);
+  const [initialUserCheck, setInitialUserCheck] = useState(false);
 
   useEffect(() => {
     if (window.localStorage.getItem('jwt') && !userStore.isLoggedIn) {
-      userStore.getCurrentUser();
+      userStore.getCurrentUser().then(() => setInitialUserCheck(true));
+    } else {
+      setInitialUserCheck(true);
     }
   }, [userStore.isLoggedIn])
 
@@ -37,18 +39,18 @@ const App: React.FC<RouteComponentProps> = observer(({ location }) => {
       <main>
         <Route exact path="/" component={Home} />
         <Route path={'/(.+)'} render={() => (
-          <div className="app">
-            <NavBarComponent />
-
-            <Switch>
-              <Route path="/login" component={LoginComponent} />
-              <Route path="/activities" component={ActivityComponent} />
-              <Route path="/activity/:id" component={ActivityDetail} />
-              <Route path="/profile/:username" component={ProfileComponent} />
-              <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
+          initialUserCheck ?
+            <div className="app">
+              <NavBarComponent />
+              <Switch>
+                <Route path="/login" component={LoginComponent} />
+                <Route path="/activities" component={ActivityComponent} />
+                <Route path="/activity/:id" component={ActivityDetail} />
+                <Route path="/profile/:username" component={ProfileComponent} />
+                <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
+                <Route component={NotFound} />
+              </Switch>
+            </div> : <></>
         )} />
       </main>
     </Fragment>

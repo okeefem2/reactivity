@@ -3,9 +3,12 @@ import React from 'react';
 import './profile-content.scss';
 import { Tab } from 'semantic-ui-react';
 import ProfilePhotos from '../photos/profile-photos';
+import { ProfileFollowings } from '../followings/profile-followings';
 
 /* eslint-disable-next-line */
-export interface ProfileContentProps { }
+export interface ProfileContentProps {
+  setActiveProfileTab: (index) => void;
+}
 
 const panes = [
   {
@@ -22,21 +25,21 @@ const panes = [
   },
   {
     menuItem: 'Followers',
-    render: () => <Tab.Pane>Followers content.</Tab.Pane>
+    render: () => <ProfileFollowings></ProfileFollowings>
   },
   {
     menuItem: 'Following',
-    render: () => <Tab.Pane>Following content.</Tab.Pane>
+    render: () => <ProfileFollowings></ProfileFollowings>
   },
 ];
 
-export const ProfileContentComponent = (props: ProfileContentProps) => {
+export const ProfileContentComponent = ({ setActiveProfileTab }) => {
   return (
     <Tab
       menu={{ fluid: true, vertical: true }}
       menuPosition='right'
       panes={panes}
-      activeIndex={1}
+      onTabChange={(_e, data) => setActiveProfileTab(data.activeIndex)}
     />
   );
 };

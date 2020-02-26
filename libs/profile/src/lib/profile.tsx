@@ -25,8 +25,14 @@ export const ProfileComponent: React.FC<RouteComponentProps<ProfileParams>> =
     return (
       <Grid>
         <Grid.Column width={16}>
-          <ProfileHeaderComponent profile={userStore.userProfile}></ProfileHeaderComponent>
-          <ProfileContentComponent></ProfileContentComponent>
+          <ProfileHeaderComponent
+            profile={userStore.userProfile}
+            follow={userStore.follow}
+            unfollow={userStore.unfollow}
+            isCurrentUser={userStore.isProfileCurrentUser}
+          >
+          </ProfileHeaderComponent>
+          <ProfileContentComponent setActiveProfileTab={userStore.setActiveProfileTab}></ProfileContentComponent>
         </Grid.Column>
       </Grid>
     );

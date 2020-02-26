@@ -1,6 +1,7 @@
 import { get, post, put, del } from '@reactivity/common';
-import { Activity } from '@reactivity/model';
+import { Activity, PageableList, PaginateOptions } from '@reactivity/model';
 import { userStore } from '@reactivity/user-store';
+import { AxiosRequestConfig } from 'axios';
 const apiBase = '/api/activity';
 // const apiBase = '/dotnet/activity';
 // can also be /dotnet/activity to use the dotnet backend
@@ -8,6 +9,13 @@ const apiBase = '/api/activity';
 
 export function list(): Promise<Activity[]> {
   return get<Activity[]>(`${apiBase}`).then((activities) => activities.map(transform));
+}
+
+export function paginate(params: PaginateOptions): Promise<PageableList<Activity>> {
+  return get<PageableList<Activity>>(`${apiBase}`, params).then((activitiesList) => ({
+    ...activitiesList,
+    data: activitiesList.data && activitiesList.data.map(transform)
+  }));
 }
 
 export function getById(id: string): Promise<Activity> {

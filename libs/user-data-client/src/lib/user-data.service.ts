@@ -22,6 +22,18 @@ export function getProfile(username: string): Promise<User> {
   return get<User>(`${userApiBase}/${username}`);
 }
 
+export function follow(username: string) {
+  return post(`${userApiBase}/${username}/follow`, {});
+}
+
+export function unfollow(username: string) {
+  return del(`${userApiBase}/${username}/follow`);
+}
+
+export function getList(username: string, predicate: 'followers' | 'following'): Promise<User[]> {
+  return get<User[]>(`${userApiBase}/${username}/${predicate}`);
+}
+
 export function uploadProfilePhoto(photo: Blob): Promise<Photo> {
   return postFile<Photo>(`${photosApiBase}`, photo);
 }

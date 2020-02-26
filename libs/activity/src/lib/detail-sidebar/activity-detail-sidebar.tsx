@@ -43,7 +43,8 @@ export const ActivityDetailSidebar = ({ attendees }: ActivityDetailSidebarProps)
                   <Item.Header as='h3'>
                     <Link to={`/profile/${attendee.user.username}`}>{attendee.user.username} </Link>
                   </Item.Header>
-                  <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
+                  {attendee.user.isFollowed && <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>}
+
                 </Item.Content>
               </Item>
             ))

@@ -9,20 +9,31 @@ export interface ActivityListItemAttendeesProps {
   attendees: UserActivity[];
 }
 
+const styles = {
+  borderColor: 'orange',
+  borderWidth: 2,
+}
+
 export const ActivityListItemAttendees = (
   { attendees }: ActivityListItemAttendeesProps
 ) => {
   return attendees ? (
     <List horizontal>
       {attendees.map((attendee) => (
-        <List.Item key={attendee.user.username}>
-          <Popup
-            header={attendee.user.username}
-            trigger={
-              <Image size='mini' circular src={attendee.user.image || '/assets/user.png'}></Image>
-            }
-          />
-        </List.Item>
+        !!attendee.user ?
+          <List.Item key={attendee.user.username}>
+            <Popup
+              header={attendee.user.username}
+              trigger={
+                <Image size='mini'
+                  circular
+                  src={attendee.user.image || '/assets/user.png'}
+                  bordered
+                  style={attendee.user.isFollowed ? styles : null}
+                />
+              }
+            />
+          </List.Item> : <></>
       ))}
     </List>
   ) : <div></div>;
