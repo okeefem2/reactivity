@@ -34,7 +34,7 @@ class ActivityStore {
 
     reaction(
       () => this.pagingOptions,
-      (options: PagingOptions) => {
+      () => {
         this.loadActivities({ ...this.paginateOptions, ...this.filterOptions });
       }
     );
@@ -92,7 +92,6 @@ class ActivityStore {
   }
 
   @action loadActivities = async (paginateOptions: PaginateOptions) => {
-    loadingStore.toggleLoading(true, 'Loading Activities');
 
     try {
       const activitiesList: PageableList<Activity> = await paginate(paginateOptions);
@@ -107,7 +106,6 @@ class ActivityStore {
       console.log('Error while loading activities', e);
     }
 
-    loadingStore.toggleLoading(false);
   }
 
   @action createActivity = () => {

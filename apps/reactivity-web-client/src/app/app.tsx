@@ -6,11 +6,10 @@ import { ActivityComponent, ActivityForm, ActivityDetail } from '@reactivity/act
 import { Home } from '@reactivity/home';
 import { observer } from 'mobx-react-lite';
 import { loadingContext } from '@reactivity/loading-store';
-import { LoadingComponent } from '@reactivity/components';
+import { LoadingComponent, PrivateRoute } from '@reactivity/components';
 import { ToastContainer, toast } from 'react-toastify';
 import { LoginComponent } from '@reactivity/auth';
 import { userContext } from '@reactivity/user-store';
-import { commentContext } from '@reactivity/comment-store';
 import { ModalContainer } from '@reactivity/modal';
 import { ProfileComponent } from '@reactivity/profile';
 
@@ -44,10 +43,10 @@ const App: React.FC<RouteComponentProps> = observer(({ location }) => {
               <NavBarComponent />
               <Switch>
                 <Route path="/login" component={LoginComponent} />
-                <Route path="/activities" component={ActivityComponent} />
-                <Route path="/activity/:id" component={ActivityDetail} />
-                <Route path="/profile/:username" component={ProfileComponent} />
-                <Route path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
+                <PrivateRoute path="/activities" component={ActivityComponent} />
+                <PrivateRoute path="/activity/:id" component={ActivityDetail} />
+                <PrivateRoute path="/profile/:username" component={ProfileComponent} />
+                <PrivateRoute path={['/create-activity', '/edit-activity/:id']} component={ActivityForm} key={location.key} />
                 <Route component={NotFound} />
               </Switch>
             </div> : <></>

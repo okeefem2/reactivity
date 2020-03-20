@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import { activityContext } from '@reactivity/activity-store';
 import InfiniteScroll from 'react-infinite-scroller';
 import ActivityFilters from '../filters/activity-filters';
+import { ActivityListItemPlaceholder } from '../placeholder/activity-placeholder';
 
 export const ActivityDashboardComponent: React.FC =
   observer(() => {
@@ -18,17 +19,24 @@ export const ActivityDashboardComponent: React.FC =
       activityStore.setPagingOptions({ ...currentOptions, page: currentOptions.page + 1 });
     }
 
+
+
     return (
       <div className="activity-dashboard">
         <div className="activity-dashboard__list">
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={handleGetNext}
-            hasMore={!activityStore.loadingNextPage && activityStore.currentPage + 1 <= activityStore.totalPages}
-            initialLoad={false}
-          >
-            <ActivityListComponent activityGroups={activityStore.activitiesByDate} />
-          </InfiniteScroll>
+          {
+            activityStore.loadingNextPage && activityStore.currentPage === 0 ?
+              <ActivityListItemPlaceholder /> :
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={handleGetNext}
+                hasMore={!activityStore.loadingNextPage && activityStore.currentPage + 1 <= activityStore.totalPages}
+                initialLoad={false}
+              >
+                <ActivityListComponent activityGroups={activityStore.activitiesByDate} />
+              </InfiniteScroll>
+          }
+
         </div>
 
         <div className="activity-dashboard__detail">

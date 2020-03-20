@@ -1,6 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { routerHistory } from '../router-history';
 import { loadingStore } from '@reactivity/loading-store';
+import { userStore } from '@reactivity/user-store';
 import { toast } from 'react-toastify';
 
 // setting baseUrl is not needed since we are proxying requests
@@ -26,6 +27,10 @@ axios.interceptors.response.use(undefined, (error) => {
   const { status, data, config } = error.response;
   if (status === 404) {
     routerHistory.push('/notfound');
+  }
+  // IRL would want to check if the token was expired to cause this or if the user is just not allowed
+  if (status === 401) {
+    userStore.logout();
   }
   if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
     routerHistory.push('/notfound');

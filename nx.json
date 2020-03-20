@@ -73,6 +73,9 @@
     },
     "comment-store": {
       "tags": []
+    },
+    "users-api": {
+      "tags": []
     }
   }
 }
