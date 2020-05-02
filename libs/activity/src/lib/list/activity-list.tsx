@@ -4,7 +4,6 @@ import { Activity } from '@reactivity/model';
 
 import './activity-list.scss';
 import { ActivityListItem } from '../list-item/activity-list-item';
-import { ActivityGroups } from '@reactivity/activity-store';
 
 interface ActivityListProps {
   activityGroups: Map<string, Activity[]>;

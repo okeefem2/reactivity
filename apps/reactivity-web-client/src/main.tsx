@@ -4,14 +4,17 @@ import { Router } from 'react-router-dom';
 import App from './app/App';
 import { routerHistory } from '@reactivity/common';
 import dateFnsLocalizer from 'react-widgets-date-fns';
-dateFnsLocalizer()
+
+dateFnsLocalizer();
 
 ReactDOM.render(
-  <Router history={routerHistory}>
-    {/* <ScrollToTop> */}
-    <App />
-    {/* </ScrollToTop> */}
-  </Router>,
+
+    <Router history={routerHistory}>
+      {/* <ScrollToTop> */}
+      <App />
+      {/* </ScrollToTop> */}
+    </Router>
+,
   document.getElementById('root')
 );
 

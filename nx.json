@@ -50,9 +50,6 @@
     "loading-store": {
       "tags": []
     },
-    "axios": {
-      "tags": []
-    },
     "model": {
       "tags": []
     },
@@ -75,6 +72,19 @@
       "tags": []
     },
     "users-api": {
+      "tags": []
+    },
+    "lyrical": {
+      "tags": []
+    },
+    "lyrical-web-client": {
+      "tags": []
+    },
+    "lyrical-web-client-e2e": {
+      "tags": [],
+      "implicitDependencies": ["lyrical-web-client"]
+    },
+    "lyrical-song": {
       "tags": []
     }
   }

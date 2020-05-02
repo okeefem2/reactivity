@@ -58,3 +58,16 @@ npm i -D @babel/core@^7.0.0-0
 Cannot read property 'joinColumns' of undefined error usually the fix involves some stupid typo or incorrect join association
 
 Pa$$w0rd
+
+nx g @nrwl/nest:application users-api  to add a new nest app
+
+<https://docs.nestjs.com/graphql/quick-start>
+
+also npm i --save apollo-server-express
+
+
+docker exec -it reactivity psql -U postgres -c "create database lyricalnest"
+nx generate @nestjs/schematics:resolver lyrics --source-root apps/lyrical/src --path app
+nx generate @nestjs/schematics:resolver songs --source-root apps/lyrical/src --path app
+nx generate @nestjs/schematics:service lyrics --source-root apps/lyrical/src --path app
+nx generate @nrwl/react:app lyrical-web-client

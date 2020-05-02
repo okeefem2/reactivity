@@ -56,7 +56,7 @@ const App: React.FC<RouteComponentProps> = observer(({ location }) => {
   );
 });
 
-export default withRouter(App);
+export default withRouter(App); // this will give access to router data such as match, location etc.
 {/* START: routes */ }
 {/* These routes and navigation have been generated for you */ }
 {/* Feel free to move and update them to fit your needs */ }

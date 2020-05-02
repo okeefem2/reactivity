@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type LyricEntity {
+  id: ID!
+  likes: Int!
+  content: String!
+  song: SongEntity!
+}
+
+input LyricInput {
+  content: String!
+  songId: ID!
+}
+
+type Mutation {
+  likeLyric(lyricId: ID!): Int!
+  addLyric(lyric: LyricInput!): LyricEntity!
+  deleteSong(songId: ID!): ID!
+  addSong(song: SongInput!): SongEntity!
+}
+
+type Query {
+  lyric(id: String!): LyricEntity!
+  song(id: String!): SongEntity!
+  songs: [SongEntity!]!
+}
+
+type SongEntity {
+  id: ID!
+  title: String!
+  lyrics: [LyricEntity!]!
+}
+
+input SongInput {
+  title: String!
+}

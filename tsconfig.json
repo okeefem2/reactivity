@@ -11,71 +11,32 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@reactivity/common": [
-        "libs/common/src/index.ts"
-      ],
-      "@reactivity/components": [
-        "libs/components/src/index.ts"
-      ],
-      "@reactivity/activity": [
-        "libs/activity/src/index.ts"
-      ],
-      "@reactivity/activity-store": [
-        "libs/activity-store/src/index.ts"
-      ],
+      "@reactivity/common": ["libs/common/src/index.ts"],
+      "@reactivity/components": ["libs/components/src/index.ts"],
+      "@reactivity/activity": ["libs/activity/src/index.ts"],
+      "@reactivity/activity-store": ["libs/activity-store/src/index.ts"],
       "@reactivity/activity-data-client": [
         "libs/activity-data-client/src/index.ts"
       ],
-      "@reactivity/entity": [
-        "libs/entity/src/index.ts"
-      ],
-      "@reactivity/home": [
-        "libs/home/src/index.ts"
-      ],
-      "@reactivity/loading-store": [
-        "libs/loading-store/src/index.ts"
-      ],
-      "@reactivity/model": [
-        "libs/model/src/index.ts"
-      ],
-      "@reactivity/user-data-client": [
-        "libs/user-data-client/src/index.ts"
-      ],
-      "@reactivity/user-store": [
-        "libs/user-store/src/index.ts"
-      ],
-      "@reactivity/auth": [
-        "libs/auth/src/index.ts"
-      ],
-      "@reactivity/modal": [
-        "libs/modal/src/index.ts"
-      ],
-      "@reactivity/profile": [
-        "libs/profile/src/index.ts"
-      ],
-      "@reactivity/comment-store": [
-        "libs/comment-store/src/index.ts"
-      ]
+      "@reactivity/entity": ["libs/entity/src/index.ts"],
+      "@reactivity/home": ["libs/home/src/index.ts"],
+      "@reactivity/loading-store": ["libs/loading-store/src/index.ts"],
+      "@reactivity/model": ["libs/model/src/index.ts"],
+      "@reactivity/user-data-client": ["libs/user-data-client/src/index.ts"],
+      "@reactivity/user-store": ["libs/user-store/src/index.ts"],
+      "@reactivity/auth": ["libs/auth/src/index.ts"],
+      "@reactivity/modal": ["libs/modal/src/index.ts"],
+      "@reactivity/profile": ["libs/profile/src/index.ts"],
+      "@reactivity/comment-store": ["libs/comment-store/src/index.ts"],
+      "@reactivity/lyrical-song": ["libs/lyrical-song/src/index.ts"]
     }
   },
-  "include": [
-    "./typings/**/*.ts",
-    "./**/*.ts",
-    "./**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "include": ["./typings/**/*.ts", "./**/*.ts", "./**/*.tsx"],
+  "exclude": ["node_modules", "tmp"]
 }
